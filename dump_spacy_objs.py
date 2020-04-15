@@ -55,7 +55,7 @@ else:
 data = data.to_dict("records")
 print("Total data:", len(data))
 
-with ProcessPoolExecutor() as executor:
+with ProcessPoolExecutor(max_workers=6) as executor:
     for id in executor.map(dump_object, data):
         if id % 1000 == 0:
             print("Processed", id, "documents")
