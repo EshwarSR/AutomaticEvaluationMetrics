@@ -4,11 +4,18 @@ import spacy
 from collections import Counter
 from wmd import WMD
 import numpy as np
+from allennlp.commands.elmo import ElmoEmbedder
+from bert_embedding import BertEmbedding
+import time
 
 
 class EMDMetrics:
     def __init__(self, model):
         self.model = model
+        if self.model == "elmo":
+            self.MODEL = ElmoEmbedder()
+        elif self.model == "bert":
+            self.MODEL = BertEmbedding()
         self.nlp = spacy.load("en_core_web_md")
 
     def get_sent_embedding(self, word_emb_list):
@@ -30,7 +37,32 @@ class EMDMetrics:
                     next_id += 1
                 doc_list.append(sent_list)
 
-        # TODO: ELMO and BERT
+        elif self.model == "elmo":
+            for sent in spacy_doc.sents:
+                sent_words_list = []
+                sent_ids_list = []
+                for word in sent:
+                    sent_words_list.append(word.text)
+                word_vectors = self.MODEL.embed_sentence(sent_words_list)
+                word_vectors = np.average(word_vectors, axis=0)
+                for word_idx in range(len(sent_words_list)):
+                    sent_ids_list.append(next_id)
+                    emb[next_id] = word_vectors[word_idx]
+                    next_id += 1
+                doc_list.append(sent_ids_list)
+
+        elif self.model == "bert":
+            sents = []
+            for sent in spacy_doc.sents:
+                sents.append(sent.text)
+            bert_resp = self.MODEL(sents)
+            for words_list, word_vectors in bert_resp:
+                sent_ids_list = []
+                for word_idx in range(len(words_list)):
+                    sent_ids_list.append(next_id)
+                    emb[next_id] = word_vectors[word_idx]
+                    next_id += 1
+                doc_list.append(sent_ids_list)
 
         if method == "wms":
             # Flattened list
@@ -89,13 +121,5 @@ class EMDMetrics:
         calc = WMD(emb, nbow, vocabulary_min=1)
         dist = calc.nearest_neighbors("reference", k=1, early_stop=1)[
             0][1]
-        return dist
-
-
-if __name__ == "__main__":
-    calculator = EMDMetrics("glove")
-    ref = "Hi, I'm Eshwar."
-    cand = "Hello, I'm Eshwar."
-    print(calculator.get_similarity(ref, cand, "wms"))
-    print(calculator.get_similarity(ref, cand, "sms"))
-    print(calculator.get_similarity(ref, cand, "w+sms"))
+        similarity = np.exp(-dist)
+        return similarity
