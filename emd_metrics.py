@@ -7,6 +7,11 @@ import numpy as np
 from allennlp.commands.elmo import ElmoEmbedder
 from bert_embedding import BertEmbedding
 import time
+import nltk
+from nltk.corpus import stopwords
+
+
+stop_words = set(stopwords.words('english'))
 
 
 class EMDMetrics:
@@ -28,13 +33,17 @@ class EMDMetrics:
         weights = []
 
         if self.model == "glove":
-            for sent in spacy_doc.sents:
+            sents_list = [sent for sent in nltk.sent_tokenize(spacy_doc.text)]
+            # for sent in spacy_doc.sents: # Trying to replicate authors score
+            for sent in sents_list:
                 sent_list = []
-                for word in sent:
-                    # sent_list.append(word.text)
-                    sent_list.append(next_id)
-                    emb[next_id] = self.nlp.vocab.get_vector(word.text)
-                    next_id += 1
+                # for word in sent: # Trying to replicate authors score
+                for word in self.nlp(sent):
+                    # TODO: Should we consider stop words or no?
+                    if word.text.isalpha() and word.text.lower() not in stop_words:
+                        sent_list.append(next_id)
+                        emb[next_id] = self.nlp.vocab.get_vector(word.text)
+                        next_id += 1
                 doc_list.append(sent_list)
 
         elif self.model == "elmo":
