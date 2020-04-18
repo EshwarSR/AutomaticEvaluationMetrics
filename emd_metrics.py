@@ -15,13 +15,14 @@ stop_words = set(stopwords.words('english'))
 
 
 class EMDMetrics:
-    def __init__(self, model):
+    def __init__(self, model, ignore_stopwords=True):
         self.model = model
         if self.model == "elmo":
             self.MODEL = ElmoEmbedder()
         elif self.model == "bert":
             self.MODEL = BertEmbedding()
         self.nlp = spacy.load("en_core_web_md")
+        self.ignore_stopwords = ignore_stopwords
 
     def get_sent_embedding(self, word_emb_list):
         word_emb_array = np.array(word_emb_list)
@@ -33,32 +34,49 @@ class EMDMetrics:
         weights = []
 
         if self.model == "glove":
-            sents_list = [sent for sent in nltk.sent_tokenize(spacy_doc.text)]
-            # for sent in spacy_doc.sents: # Trying to replicate authors score
-            for sent in sents_list:
+            # sents_list = [sent for sent in nltk.sent_tokenize(
+            #     spacy_doc.text)]  # Trying to replicate authors score
+            for sent in spacy_doc.sents:
+                # for sent in sents_list:  # Trying to replicate authors score
                 sent_list = []
-                # for word in sent: # Trying to replicate authors score
-                for word in self.nlp(sent):
-                    # TODO: Should we consider stop words or no?
-                    if word.text.isalpha() and word.text.lower() not in stop_words:
+                for word in sent:
+                    # for word in self.nlp(sent):  # Trying to replicate authors score
+                    include = False
+                    if self.ignore_stopwords:
+                        if word.text.isalpha() and word.text.lower() not in stop_words:
+                            include = True
+                    else:
+                        include = True
+
+                    if include:
                         sent_list.append(next_id)
                         emb[next_id] = self.nlp.vocab.get_vector(word.text)
                         next_id += 1
-                doc_list.append(sent_list)
+                if len(sent_list) > 0:
+                    doc_list.append(sent_list)
 
         elif self.model == "elmo":
             for sent in spacy_doc.sents:
                 sent_words_list = []
                 sent_ids_list = []
                 for word in sent:
-                    sent_words_list.append(word.text)
-                word_vectors = self.MODEL.embed_sentence(sent_words_list)
-                word_vectors = np.average(word_vectors, axis=0)
-                for word_idx in range(len(sent_words_list)):
-                    sent_ids_list.append(next_id)
-                    emb[next_id] = word_vectors[word_idx]
-                    next_id += 1
-                doc_list.append(sent_ids_list)
+                    include = False
+                    if self.ignore_stopwords:
+                        if word.text.isalpha() and word.text.lower() not in stop_words:
+                            include = True
+                    else:
+                        include = True
+                    if include:
+                        sent_words_list.append(word.text)
+
+                if len(sent_words_list) > 0:
+                    word_vectors = self.MODEL.embed_sentence(sent_words_list)
+                    word_vectors = np.average(word_vectors, axis=0)
+                    for word_idx in range(len(sent_words_list)):
+                        sent_ids_list.append(next_id)
+                        emb[next_id] = word_vectors[word_idx]
+                        next_id += 1
+                    doc_list.append(sent_ids_list)
 
         elif self.model == "bert":
             sents = []
@@ -68,10 +86,19 @@ class EMDMetrics:
             for words_list, word_vectors in bert_resp:
                 sent_ids_list = []
                 for word_idx in range(len(words_list)):
-                    sent_ids_list.append(next_id)
-                    emb[next_id] = word_vectors[word_idx]
-                    next_id += 1
-                doc_list.append(sent_ids_list)
+                    include = False
+                    word = words_list[word_idx]
+                    if self.ignore_stopwords:
+                        if word.isalpha() and word.lower() not in stop_words:
+                            include = True
+                    else:
+                        include = True
+                    if include:
+                        sent_ids_list.append(next_id)
+                        emb[next_id] = word_vectors[word_idx]
+                        next_id += 1
+                if len(sent_ids_list) > 0:
+                    doc_list.append(sent_ids_list)
 
         if method == "wms":
             # Flattened list
@@ -83,7 +110,7 @@ class EMDMetrics:
             if method == "sms":
                 ids_list = []
                 weights = []
-            elif method == "w+sms":
+            elif method == "s+wms":
                 ids_list = [item for sublist in doc_list for item in sublist]
                 weights = [1/(len(ids_list))] * len(ids_list)
 
@@ -100,7 +127,7 @@ class EMDMetrics:
 
             weights = np.array(weights, dtype=np.float32)
 
-            if method == "w+sms":
+            if method == "s+wms":
                 weights = weights / 2
 
         return next_id, emb, ids_list, weights
