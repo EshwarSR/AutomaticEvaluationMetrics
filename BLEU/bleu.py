@@ -84,4 +84,4 @@ def BLEU(reference, candidate, order=4):
     
     bleu = bp*geo_mean
     
-    return bleu    
+    return bleu
