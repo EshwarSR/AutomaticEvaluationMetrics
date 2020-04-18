@@ -18,8 +18,8 @@ def best_match_length(reference, candidate):
     for ref in reference:
         ref_length_list.append(len(ref))
     cand_length_list = [len(candidate)]*len(ref_length_list)
-    difference = (np.abs(np.asarray(ref_length_list) - np.asarray(cand_length_list)))
-    return ref_length_list[np.argmin(difference)]
+    difference = ((np.asarray(ref_length_list) - np.asarray(cand_length_list)))
+    return difference[np.argmin(difference)]
     # if 0 in difference:
     #     return ref_length_list[np.argmin(difference)]
     # else:

@@ -12,7 +12,6 @@ n_gram = 4
 
 reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores, max_scores = data(df)
 
-print(reference_id[2], candidate_id[2], candidate_scores[2], max_scores)
 # print(BLEU(reference_corpus[1], candidate_corpus[1][50], 4))
 
 bleu_scores = []

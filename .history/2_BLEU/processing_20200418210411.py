@@ -111,17 +111,10 @@ def data(df):
 
     reference_corpus = dict(reference_corpus)
     candidate_corpus = dict(candidate_corpus)
-    reference_id = dict(reference_id)
-    candidate_id = dict(candidate_id)
-    candidate_scores = dict(candidate_scores)
 
 
     reference_corpus = list(reference_corpus.values())
     candidate_corpus = list(candidate_corpus.values())
-    reference_id = list(reference_id.values())
-    candidate_id = list(candidate_id.values())
-    candidate_scores = list(candidate_scores.values())
-
 
 
     new_reference_corpus = []
@@ -146,4 +139,4 @@ def data(df):
     reference_corpus = list(new_reference_corpus.values())
     candidate_corpus = list(new_candidate_corpus.values())
 
-    return reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores, max_score_list
+    return reference_corpus, candidate_corpus

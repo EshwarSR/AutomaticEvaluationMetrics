@@ -18,18 +18,17 @@ def best_match_length(reference, candidate):
     for ref in reference:
         ref_length_list.append(len(ref))
     cand_length_list = [len(candidate)]*len(ref_length_list)
-    difference = (np.abs(np.asarray(ref_length_list) - np.asarray(cand_length_list)))
-    return ref_length_list[np.argmin(difference)]
-    # if 0 in difference:
-    #     return ref_length_list[np.argmin(difference)]
-    # else:
-    #     final = []
-    #     final.append(x for x in difference if x<0)
-    #     if len(final)==0:
-    #         return len(candidate)
-    #     else:
-    #         final = np.asarray(final)
-    #         return ref_length_list[np.where(difference = -1*(final[np.argmax(final)]))][0]
+    difference = ((np.asarray(ref_length_list) - np.asarray(cand_length_list)))
+    if 0 in difference:
+        return ref_length_list[np.argmin(difference)]
+    else:
+        final = []
+        final.append(x for x in difference if x<0)
+        if len(final)==0:
+            return len(candidate)
+        else:
+            final = np.asarray(final)
+            return ref_length_list[np.where(difference = np.abs(final[np.argmax(final)]))][0]
             
 
 def modified_precision(reference, candidate, order=4):
