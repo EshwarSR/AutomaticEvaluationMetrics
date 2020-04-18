@@ -15,13 +15,13 @@ reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores
 print(reference_id[2], candidate_id[2], candidate_scores[2], max_scores)
 # print(BLEU(reference_corpus[1], candidate_corpus[1][50], 4))
 
-bleu_scores = []
-bleu = []
+# bleu_scores = []
+# bleu = []
 
-for i in range(100):
-    bleu.append(BLEU(reference_corpus[2], candidate_corpus[2][i], n_gram))
-    # print(bleu)
-    # bleu_scores.append(list(bleu))
+# for i in range(100):
+#     bleu.append(BLEU(reference_corpus[2], candidate_corpus[2][i], n_gram))
+#     # print(bleu)
+#     # bleu_scores.append(list(bleu))
 
-for i in range(len(bleu)):
-    print(bleu[i])
+# for i in range(len(bleu)):
+#     print(bleu[i])

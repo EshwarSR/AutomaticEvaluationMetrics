@@ -146,4 +146,4 @@ def data(df):
     reference_corpus = list(new_reference_corpus.values())
     candidate_corpus = list(new_candidate_corpus.values())
 
-    return reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores, max_score_list
+    return reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores
