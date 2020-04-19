@@ -12,10 +12,6 @@ n_gram = 4
 
 reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores, max_scores = data(df)
 
-# Check the correctness of length
-# for i in range(len(reference_corpus)):
-#     print(len(reference_corpus[i]), len(candidate_corpus[i]), len(reference_id[i]), len(candidate_id[i]))
-
 # print(reference_id[2], candidate_id[2], candidate_scores[2], max_scores)
 # print(BLEU(reference_corpus[1], candidate_corpus[1][50], 4))
 
@@ -35,4 +31,4 @@ for i in range(len(reference_corpus)):
     with open(filename, 'w') as f:
         f.write("candidate_id\treference_id\tsimilarity\tscore\n")
         for j in range(len(candidate_corpus[i])):
-            f.write("{0}\t{1}\t{2}\t{3}\n".format(candidate_id[i][j], reference_id[i][j], bleu_scores[i][j], candidate_scores[i][j]))
+            f.write("{0}\t{1}\t{2}\t{3}\n".format(candidate_id[i][j], reference_id[i][j], candidate_scores[i][j], bleu_scores[i][j]))

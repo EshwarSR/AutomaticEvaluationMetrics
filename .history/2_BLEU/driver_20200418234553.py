@@ -12,10 +12,6 @@ n_gram = 4
 
 reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores, max_scores = data(df)
 
-# Check the correctness of length
-# for i in range(len(reference_corpus)):
-#     print(len(reference_corpus[i]), len(candidate_corpus[i]), len(reference_id[i]), len(candidate_id[i]))
-
 # print(reference_id[2], candidate_id[2], candidate_scores[2], max_scores)
 # print(BLEU(reference_corpus[1], candidate_corpus[1][50], 4))
 
