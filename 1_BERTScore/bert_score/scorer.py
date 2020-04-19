@@ -17,14 +17,13 @@ from .utils import (get_model, get_idf_dict, bert_cos_score_idf,
                     lang2model, model2layers, get_hash,
                     cache_scibert, sent_encode)
 
-
 class BERTScorer:
     """
     BERTScore Scorer Object.
     """
 
     def __init__(
-        self, model_type=None, num_layers=None, batch_size=64, nthreads=4,
+        self, model_type=None, num_layers=None, batch_size=64, nthreads=4, 
         all_layers=False, idf=False, idf_sents=None, device=None,
         lang=None, rescale_with_baseline=False,
     ):
@@ -81,13 +80,11 @@ class BERTScorer:
         # Building model and tokenizer
 
         if self.model_type.startswith('scibert'):
-            self._tokenizer = AutoTokenizer.from_pretrained(
-                cache_scibert(self.model_type))
+            self._tokenizer = AutoTokenizer.from_pretrained(cache_scibert(self.model_type))
         else:
             self._tokenizer = AutoTokenizer.from_pretrained(self.model_type)
 
-        self._model = get_model(
-            self.model_type, self.num_layers, self.all_layers)
+        self._model = get_model(self.model_type, self.num_layers, self.all_layers)
         self._model.to(self.device)
 
         self._idf_dict = None
@@ -130,8 +127,7 @@ class BERTScorer:
                     pd.read_csv(baseline_path).to_numpy()
                 )[:, 1:].unsqueeze(1).float()
         else:
-            raise ValueError(
-                f'Baseline not Found for {self.model_type} on {self.lang} at {baseline_path}')
+            raise ValueError(f'Baseline not Found for {self.model_type} on {self.lang} at {baseline_path}')
 
         return baseline_vals
 
@@ -147,8 +143,7 @@ class BERTScorer:
         if self._idf_dict is not None:
             warnings.warn("Overwriting the previous importance weights.")
 
-        self._idf_dict = get_idf_dict(
-            sents, self._tokenizer, nthreads=self.nthreads)
+        self._idf_dict = get_idf_dict(sents, self._tokenizer, nthreads=self.nthreads)
 
     def score(self, cands, refs, verbose=False, batch_size=64, return_hash=False):
         """
@@ -159,8 +154,8 @@ class BERTScorer:
         Return:
             - :param: `(P, R, F)`: each is of shape (N); N = number of input
                       candidate reference pairs. if returning hashcode, the
-                      output will be ((P, R, F), hashcode). If a candidate have
-                      multiple references, the returned score of this candidate is
+                      output will be ((P, R, F), hashcode). If a candidate have 
+                      multiple references, the returned score of this candidate is 
                       the *best* score among all references.
         """
 
@@ -173,7 +168,7 @@ class BERTScorer:
             for cand, ref_group in zip(ori_cands, ori_refs):
                 cands += [cand] * len(ref_group)
                 refs += ref_group
-                ref_group_boundaries.append((count, len(ref_group)))
+                ref_group_boundaries.append((count, count + len(ref_group)))
                 count += len(ref_group)
 
         if verbose:
@@ -199,16 +194,13 @@ class BERTScorer:
             all_preds = torch.stack(max_preds, dim=0)
 
         if self.rescale_with_baseline:
-            all_preds = (all_preds - self.baseline_vals) / \
-                (1 - self.baseline_vals)
+            all_preds = (all_preds - self.baseline_vals) / (1 - self.baseline_vals)
 
-        out = all_preds[..., 0], all_preds[...,
-                                           1], all_preds[..., 2]  # P, R, F
+        out = all_preds[..., 0], all_preds[..., 1], all_preds[..., 2] # P, R, F
 
         if verbose:
             time_diff = time.perf_counter() - start
-            print(
-                f'done in {time_diff:.2f} seconds, {len(refs) / time_diff:.2f} sentences/sec')
+            print(f'done in {time_diff:.2f} seconds, {len(refs) / time_diff:.2f} sentences/sec')
 
         if return_hash:
             out = tuple([out, self.hash])
@@ -225,29 +217,26 @@ class BERTScorer:
 
         assert isinstance(candidate, str)
         assert isinstance(reference, str)
-
+        
         idf_dict = defaultdict(lambda: 1.)
         idf_dict[self._tokenizer.sep_token_id] = 0
         idf_dict[self._tokenizer.cls_token_id] = 0
 
         hyp_embedding, masks, padded_idf = get_bert_embedding([candidate], self._model, self._tokenizer, idf_dict,
-                                                              device=self.device, all_layers=False)
+                                                             device=self.device, all_layers=False)
         ref_embedding, masks, padded_idf = get_bert_embedding([reference], self._model, self._tokenizer, idf_dict,
-                                                              device=self.device, all_layers=False)
+                                                             device=self.device, all_layers=False)
         ref_embedding.div_(torch.norm(ref_embedding, dim=-1).unsqueeze(-1))
         hyp_embedding.div_(torch.norm(hyp_embedding, dim=-1).unsqueeze(-1))
         sim = torch.bmm(hyp_embedding, ref_embedding.transpose(1, 2))
         sim = sim.squeeze(0).cpu()
 
-        r_tokens = [self._tokenizer.decode([i]) for i in sent_encode(
-            self._tokenizer, reference)][1:-1]
-        h_tokens = [self._tokenizer.decode([i]) for i in sent_encode(
-            self._tokenizer, candidate)][1:-1]
-        sim = sim[1:-1, 1:-1]
+        r_tokens = [self._tokenizer.decode([i]) for i in sent_encode(self._tokenizer, reference)][1:-1]
+        h_tokens = [self._tokenizer.decode([i]) for i in sent_encode(self._tokenizer, candidate)][1:-1]
+        sim = sim[1:-1,1:-1]
 
         if self.rescale_with_baseline:
-            sim = (sim - self.baseline_vals[2].item()
-                   ) / (1 - self.baseline_vals[2].item())
+            sim = (sim - self.baseline_vals[2].item()) / (1 - self.baseline_vals[2].item())
 
         fig, ax = plt.subplots(figsize=(len(r_tokens), len(h_tokens)))
         im = ax.imshow(sim, cmap='Blues', vmin=0, vmax=1)
