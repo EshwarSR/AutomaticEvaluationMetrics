@@ -18,18 +18,17 @@ from transformers import __version__ as trans_version
 __all__ = ['model_types']
 
 SCIBERT_URL_DICT = {
-    # recommend by the SciBERT authors
-    'scibert-scivocab-uncased': 'https://s3-us-west-2.amazonaws.com/ai2-s2-research/scibert/pytorch_models/scibert_scivocab_uncased.tar',
+    'scibert-scivocab-uncased': 'https://s3-us-west-2.amazonaws.com/ai2-s2-research/scibert/pytorch_models/scibert_scivocab_uncased.tar', # recommend by the SciBERT authors
     'scibert-scivocab-cased': 'https://s3-us-west-2.amazonaws.com/ai2-s2-research/scibert/pytorch_models/scibert_scivocab_cased.tar',
     'scibert-basevocab-uncased': 'https://s3-us-west-2.amazonaws.com/ai2-s2-research/scibert/pytorch_models/scibert_basevocab_uncased.tar',
     'scibert-basevocab-cased':  'https://s3-us-west-2.amazonaws.com/ai2-s2-research/scibert/pytorch_models/scibert_basevocab_cased.tar',
 }
 
 model_types = list(BertConfig.pretrained_config_archive_map.keys()) + \
-    list(XLNetConfig.pretrained_config_archive_map.keys()) + \
-    list(RobertaConfig.pretrained_config_archive_map.keys()) + \
-    list(XLMConfig.pretrained_config_archive_map.keys()) + \
-    list(SCIBERT_URL_DICT.keys())
+              list(XLNetConfig.pretrained_config_archive_map.keys()) + \
+              list(RobertaConfig.pretrained_config_archive_map.keys()) + \
+              list(XLMConfig.pretrained_config_archive_map.keys()) + \
+              list(SCIBERT_URL_DICT.keys())
 
 lang2model = defaultdict(lambda: 'bert-base-multilingual-cased')
 lang2model.update({
@@ -40,38 +39,38 @@ lang2model.update({
 
 
 model2layers = {
-    'bert-base-uncased': 9,  # 0.6925188074454226
-    'bert-large-uncased': 18,  # 0.7210358126642836
-    'bert-base-cased-finetuned-mrpc': 9,  # 0.6721947475618048
-    'bert-base-multilingual-cased': 9,  # 0.6680687802637132
+    'bert-base-uncased': 9, # 0.6925188074454226
+    'bert-large-uncased': 18, # 0.7210358126642836
+    'bert-base-cased-finetuned-mrpc': 9, # 0.6721947475618048
+    'bert-base-multilingual-cased': 9, # 0.6680687802637132
     'bert-base-chinese': 8,
-    'roberta-base': 10,  # 0.706288719158983
-    'roberta-large': 17,  # 0.7385974720781534
-    'roberta-large-mnli': 19,  # 0.7535618640417984
-    'roberta-base-openai-detector': 7,  # 0.7048158349432633
-    'roberta-large-openai-detector': 15,  # 0.7462770207355116
-    'xlnet-base-cased': 5,  # 0.6630103662114238
-    'xlnet-large-cased': 7,  # 0.6598800720297179
-    'xlm-mlm-en-2048': 6,  # 0.651262570131464
-    'xlm-mlm-100-1280': 10,  # 0.6475166424401905
+    'roberta-base': 10, # 0.706288719158983
+    'roberta-large': 17, # 0.7385974720781534
+    'roberta-large-mnli': 19, # 0.7535618640417984
+    'roberta-base-openai-detector': 7, # 0.7048158349432633
+    'roberta-large-openai-detector': 15, # 0.7462770207355116
+    'xlnet-base-cased': 5, # 0.6630103662114238
+    'xlnet-large-cased': 7, # 0.6598800720297179
+    'xlm-mlm-en-2048': 6, # 0.651262570131464
+    'xlm-mlm-100-1280': 10, # 0.6475166424401905
     'scibert-scivocab-uncased': 9,
     'scibert-scivocab-cased': 9,
     'scibert-basevocab-uncased': 9,
     'scibert-basevocab-cased':  9,
-    'distilroberta-base': 5,  # 0.6797558139322964
-    'distilbert-base-uncased': 5,  # 0.6756659152782033
-    'distilbert-base-uncased-distilled-squad': 4,  # 0.6718318036382493
-    'distilbert-base-multilingual-cased': 5,  # 0.6178131050889238
-    'albert-base-v1': 10,  # 0.654237567249745
-    'albert-large-v1': 17,  # 0.6755890754323239
-    'albert-xlarge-v1': 16,  # 0.7031844211905911
-    'albert-xxlarge-v1': 8,  # 0.7508642218461096
-    'albert-base-v2': 9,  # 0.6682455591837927
-    'albert-large-v2': 14,  # 0.7008537594374035
-    'albert-xlarge-v2': 13,  # 0.7317228357869254
-    'albert-xxlarge-v2': 8,  # 0.7505160257184014
-    'xlm-roberta-base': 9,  # 0.6506799445871697
-    'xlm-roberta-large': 17,  # 0.6941551437476826
+    'distilroberta-base': 5, # 0.6797558139322964
+    'distilbert-base-uncased': 5, # 0.6756659152782033
+    'distilbert-base-uncased-distilled-squad': 4, # 0.6718318036382493
+    'distilbert-base-multilingual-cased': 5, # 0.6178131050889238
+    'albert-base-v1': 10, # 0.654237567249745
+    'albert-large-v1': 17, # 0.6755890754323239
+    'albert-xlarge-v1': 16, # 0.7031844211905911
+    'albert-xxlarge-v1': 8, # 0.7508642218461096
+    'albert-base-v2': 9, # 0.6682455591837927
+    'albert-large-v2': 14, # 0.7008537594374035
+    'albert-xlarge-v2': 13, # 0.7317228357869254
+    'albert-xxlarge-v2': 8, # 0.7505160257184014
+    'xlm-roberta-base': 9, # 0.6506799445871697
+    'xlm-roberta-large': 17, # 0.6941551437476826
 }
 
 
@@ -96,17 +95,16 @@ def get_model(model_type, num_layers, all_layers=None):
 
     # drop unused layers
     if not all_layers:
-        if hasattr(model, 'n_layers'):  # xlm
+        if hasattr(model, 'n_layers'): # xlm
             assert 0 <= num_layers <= model.n_layers, \
                 f"Invalid num_layers: num_layers should be between 0 and {model.n_layers} for {model_type}"
             model.n_layers = num_layers
-        elif hasattr(model, 'layer'):  # xlnet
+        elif hasattr(model, 'layer'): # xlnet
             assert 0 <= num_layers <= len(model.layer), \
                 f"Invalid num_layers: num_layers should be between 0 and {len(model.layer)} for {model_type}"
             model.layer =\
-                torch.nn.ModuleList(
-                    [layer for layer in model.layer[:num_layers]])
-        elif hasattr(model, 'encoder'):  # albert
+                torch.nn.ModuleList([layer for layer in model.layer[:num_layers]])
+        elif hasattr(model, 'encoder'): # albert
             if hasattr(model.encoder, 'albert_layer_groups'):
                 assert 0 <= num_layers <= model.encoder.config.num_hidden_layers, \
                     f"Invalid num_layers: num_layers should be between 0 and {model.encoder.config.num_hidden_layers} for {model_type}"
@@ -115,14 +113,12 @@ def get_model(model_type, num_layers, all_layers=None):
                 assert 0 <= num_layers <= len(model.encoder.layer), \
                     f"Invalid num_layers: num_layers should be between 0 and {len(model.encoder.layer)} for {model_type}"
                 model.encoder.layer =\
-                    torch.nn.ModuleList(
-                        [layer for layer in model.encoder.layer[:num_layers]])
-        elif hasattr(model, 'transformer'):  # bert, roberta
+                    torch.nn.ModuleList([layer for layer in model.encoder.layer[:num_layers]])
+        elif hasattr(model, 'transformer'): # bert, roberta
             assert 0 <= num_layers <= len(model.transformer.layer), \
                 f"Invalid num_layers: num_layers should be between 0 and {len(model.transformer.layer)} for {model_type}"
             model.transformer.layer =\
-                torch.nn.ModuleList(
-                    [layer for layer in model.transformer.layer[:num_layers]])
+                torch.nn.ModuleList([layer for layer in model.transformer.layer[:num_layers]])
         else:
             raise ValueError("Not supported")
     else:
@@ -184,9 +180,8 @@ def get_idf_dict(arr, tokenizer, nthreads=4):
     with Pool(nthreads) as p:
         idf_count.update(chain.from_iterable(p.map(process_partial, arr)))
 
-    idf_dict = defaultdict(lambda: log((num_docs+1)/(1)))
-    idf_dict.update({idx: log((num_docs+1)/(c+1))
-                     for (idx, c) in idf_count.items()})
+    idf_dict = defaultdict(lambda : log((num_docs+1)/(1)))
+    idf_dict.update({idx:log((num_docs+1)/(c+1)) for (idx, c) in idf_count.items()})
     return idf_dict
 
 
@@ -222,7 +217,7 @@ def collate_idf(arr, tokenizer, idf_dict, device='cuda:0'):
 
 
 def get_bert_embedding(all_sens, model, tokenizer, idf_dict,
-                       batch_size=-1, device='cuda:0',
+                       batch_size=-1, device='cuda:0', 
                        all_layers=False):
     """
     Compute BERT embedding in batches.
@@ -241,8 +236,7 @@ def get_bert_embedding(all_sens, model, tokenizer, idf_dict,
                                                       idf_dict,
                                                       device=device)
 
-    if batch_size == -1:
-        batch_size = len(all_sens)
+    if batch_size == -1: batch_size = len(all_sens)
 
     embeddings = []
     with torch.no_grad():
@@ -293,14 +287,13 @@ def greedy_cos_idf(ref_embedding, ref_masks, ref_idf,
             .contiguous().view(L*B, ref_embedding.size(1), D)
     batch_size = ref_embedding.size(0)
     sim = torch.bmm(hyp_embedding, ref_embedding.transpose(1, 2))
-    masks = torch.bmm(hyp_masks.unsqueeze(2).float(),
-                      ref_masks.unsqueeze(1).float())
+    masks = torch.bmm(hyp_masks.unsqueeze(2).float(), ref_masks.unsqueeze(1).float())
     if all_layers:
         masks = masks.unsqueeze(0).expand(L, -1, -1, -1)\
                                   .contiguous().view_as(sim)
     else:
         masks = masks.expand(batch_size, -1, -1)\
-            .contiguous().view_as(sim)
+                                  .contiguous().view_as(sim)
 
     masks = masks.float().to(sim.device)
     sim = sim * masks
@@ -330,19 +323,16 @@ def greedy_cos_idf(ref_embedding, ref_masks, ref_idf,
         F = F.view(L, B)
 
     if torch.any(hyp_zero_mask):
-        print(
-            "Warning: Empty candidate sentence; Setting precision to be 0.", file=sys.stderr)
+        print("Warning: Empty candidate sentence; Setting precision to be 0.", file=sys.stderr)
         P = P.masked_fill(hyp_zero_mask, 0.)
 
     if torch.any(ref_zero_mask):
-        print("Warning: Empty candidate sentence; Setting recall to be 0.",
-              file=sys.stderr)
+        print("Warning: Empty candidate sentence; Setting recall to be 0.", file=sys.stderr)
         R = R.masked_fill(ref_zero_mask, 0.)
 
     F = F.masked_fill(torch.isnan(F), 0.)
 
     return P, R, F
-
 
 def bert_cos_score_idf(model, refs, hyps, tokenizer, idf_dict,
                        verbose=False, batch_size=64, device='cuda:0',
@@ -362,13 +352,12 @@ def bert_cos_score_idf(model, refs, hyps, tokenizer, idf_dict,
         - :param: `device` (str): device to use, e.g. 'cpu' or 'cuda'
     """
     preds = []
-
     def dedup_and_sort(l):
-        return sorted(list(set(l)), key=lambda x: len(x.split(" ")))
+        return sorted(list(set(l)), key= lambda x : len(x.split(" ")))
     sentences = dedup_and_sort(refs+hyps)
     embs = []
     iter_range = range(0, len(sentences), batch_size)
-    if verbose:
+    if verbose: 
         print("computing bert embedding.")
         iter_range = tqdm(iter_range)
     stats_dict = dict()
@@ -384,14 +373,13 @@ def bert_cos_score_idf(model, refs, hyps, tokenizer, idf_dict,
             emb = embs[i, :sequence_len]
             idf = padded_idf[i, :sequence_len]
             stats_dict[sen] = (emb, idf)
-
+        
     def pad_batch_stats(sen_batch, stats_dict, device):
         stats = [stats_dict[s] for s in sen_batch]
         emb, idf = zip(*stats)
         lens = [e.size(0) for e in emb]
         emb_pad = pad_sequence(emb, batch_first=True, padding_value=2.)
         idf_pad = pad_sequence(idf, batch_first=True)
-
         def length_to_mask(lens):
             lens = torch.tensor(lens, dtype=torch.long)
             max_len = max(lens)
@@ -400,10 +388,11 @@ def bert_cos_score_idf(model, refs, hyps, tokenizer, idf_dict,
             return base < lens.unsqueeze(1)
         pad_mask = length_to_mask(lens)
         return emb_pad.to(device), pad_mask.to(device), idf_pad.to(device)
+        
 
     device = next(model.parameters()).device
     iter_range = range(0, len(refs), batch_size)
-    if verbose:
+    if verbose: 
         print("computing greedy matching.")
         iter_range = tqdm(iter_range)
     for batch_start in iter_range:
@@ -422,7 +411,7 @@ def get_hash(model, num_layers, idf, rescale_with_baseline):
     msg = '{}_L{}{}_version={}(hug_trans={})'.format(
         model, num_layers, '_idf' if idf else '_no-idf', __version__, trans_version)
     if rescale_with_baseline:
-        msg += "-rescaled"
+        msg+="-rescaled"
     return msg
 
 
@@ -448,19 +437,17 @@ def cache_scibert(model_type, cache_folder='~/.cache/torch/transformers'):
     json_file = os.path.join(filename, 'special_tokens_map.json')
     if not os.path.exists(json_file):
         with open(json_file, 'w') as f:
-            print(
-                '{"unk_token": "[UNK]", "sep_token": "[SEP]", "pad_token": "[PAD]", "cls_token": "[CLS]", "mask_token": "[MASK]"}', file=f)
+            print('{"unk_token": "[UNK]", "sep_token": "[SEP]", "pad_token": "[PAD]", "cls_token": "[CLS]", "mask_token": "[MASK]"}', file=f)
 
     json_file = os.path.join(filename, 'added_tokens.json')
     if not os.path.exists(json_file):
         with open(json_file, 'w') as f:
             print('{}', file=f)
 
-    if 'uncased' in model_type:
+    if 'uncased' in model_type: 
         json_file = os.path.join(filename, 'tokenizer_config.json')
         if not os.path.exists(json_file):
             with open(json_file, 'w') as f:
-                print(
-                    '{"do_lower_case": true, "max_len": 512, "init_inputs": []}', file=f)
+                print('{"do_lower_case": true, "max_len": 512, "init_inputs": []}', file=f)
 
     return filename
