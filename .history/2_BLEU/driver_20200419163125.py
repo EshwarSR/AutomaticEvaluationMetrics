@@ -31,8 +31,8 @@ for i in range(len(reference_corpus)):
 # for i in range(len(bleu)):
 #     print(bleu[i])
 for i in range(len(reference_corpus)):
-    filename = "../results/BLEU_scores_"+"EssaySet_{}".format(i+1)+".txt"
+    filename = "BLEU_scores_"+"EssaySet_{}".format(i+1)+".txt"
     with open(filename, 'w') as f:
-        f.write("candidate_id\tsimilarity\tscore\n")
+        f.write("candidate_id\treference_id\tsimilarity\tscore\n")
         for j in range(len(candidate_corpus[i])):
             f.write("{0}\t{1}\t{2}\n".format(candidate_id[i][j], bleu_scores[i][j], candidate_scores[i][j]))
