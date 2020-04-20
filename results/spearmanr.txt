@@ -1,6 +1,6 @@
 Spearman Correlation for:
 
-1. BERTScore	:
+1. BERTScore	: r = 0.079, p = 0.002
 2. BLEU		:
 3. SMS		:
 4. S+WMS	:
