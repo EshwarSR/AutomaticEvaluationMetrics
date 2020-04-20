@@ -5,9 +5,10 @@ results_file = sys.argv[1]
 
 results = pd.read_csv(results_file, sep="\t")
 
-similarity = results["similarity"].tolist()
+similarity = results["similarity score"].tolist()
 score = results["score"].tolist()
 
 corr = spearmanr(similarity, score)
-print("File:", results_file, "Correlation:",
-      corr.correlation, "P-value:", corr.pvalue)
+print("File:", results_file)
+print("Correlation:", corr.correlation)
+print("P-value:", corr.pvalue)
