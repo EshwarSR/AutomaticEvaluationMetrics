@@ -1,0 +1,7 @@
+Spearman Correlation for:
+
+1. BERTScore	:
+2. BLEU		:
+3. SMS		:
+4. S+WMS	:
+5. WMD		:
