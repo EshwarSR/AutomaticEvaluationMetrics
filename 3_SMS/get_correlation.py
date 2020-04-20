@@ -28,10 +28,19 @@ else:
 scorr = spearmanr(similarity, score)
 # print("File:", results_file)
 print("Spearman Rank Correlation:{0:6.3f}".format(scorr.correlation))
-print("P-value:{0:5.3f}".format(scorr.pvalue))
+if (scorr.pvalue >= 0.001):
+	print("P-value:{0:6.3f}".format(scorr.pvalue))
+else:
+	print("P-value:{0:10.3e}".format(scorr.pvalue))
 pcorr = pearsonr(similarity, score)
 print("Pearson Correlation Coefficient:{0:6.3f}".format(pcorr[0]))
-print("P-value:{0:6.3f}".format(pcorr[1]))
+if (pcorr[1] >= 0.001):
+	print("P-value:{0:6.3f}".format(pcorr[1]))
+else:
+	print("P-value:{0:10.3e}".format(pcorr[1]))
 kentau = kendalltau(similarity, score)
 print("Kendall Rank Correlation :{0:6.3f}".format(kentau[0]))
-print("P-value:{0:6.3f}".format(kentau[1]))
+if (kentau[1] >= 0.001):
+	print("P-value:{0:6.3f}".format(kentau[1]))
+else:
+	print("P-value:{0:10.3e}".format(kentau[1]))
