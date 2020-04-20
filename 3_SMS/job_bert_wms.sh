@@ -2,7 +2,7 @@
 #SBATCH --job-name=bert_wms # Job name
 #SBATCH --ntasks=64 
 #SBATCH --output=logs/batch_bert_wms_%j.out # Standard output and error log
-#SBATCH --partition=cl1_all_64C
+#SBATCH --partition=cl1_48h-1G
 
 #LD_LIBRARY_PATH=/usr/local/lib64/:$LD_LIBRARY_PATH
 #export LD_LIBRARY_PATH

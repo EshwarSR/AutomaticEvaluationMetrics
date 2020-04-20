@@ -10,29 +10,27 @@ import os
 REFERENCE_FILE = "../data/reference_data.tsv"
 
 
-def calculate_similarity(candidate):
+def calculate_similarity(candidate, next_id, emb):
     s = time.time()
     can_doc = calculator.nlp(candidate["EssayText"])
     similarities = []
+    next_id, emb, can_id_list, can_weights = calculator.get_embeddings_ids_weights(
+        can_doc, next_id, emb, method)
+    nbow = {
+        "hypothesis": ("hypothesis", can_id_list, can_weights)
+    }
+
     for id, item in processed_refs.items():
-        next_id = item["next_id"]
         ref_weights = item["weights"]
         ref_id_list = item["id_list"]
-        emb = item["emb"]
+        nbow[id] = (id, ref_id_list, ref_weights)
 
-        next_id, emb, can_id_list, can_weights = calculator.get_embeddings_ids_weights(
-            can_doc, next_id, emb, method)
+    calc = WMD(emb, nbow, vocabulary_min=1)
+    dist = calc.nearest_neighbors(
+        "hypothesis", k=len(processed_refs), early_stop=1)
 
-        nbow = {
-            "reference": ("reference", ref_id_list, ref_weights),
-            "hypothesis": ("reference", can_id_list, can_weights)
-        }
-
-        calc = WMD(emb, nbow, vocabulary_min=1)
-        dist = calc.nearest_neighbors("reference", k=1, early_stop=1)[
-            0][1]
-        similarity = np.exp(-dist)
-
+    for id, score in dist:
+        similarity = np.exp(-score)
         similarities.append({
             "candidate_id": candidate["Id"],
             "reference_id": id,
@@ -49,21 +47,18 @@ def get_all_ref_emb_weights():
     reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
     reference_data = reference_data.to_dict("records")
     processed_refs = {}
-
+    next_id = 0
+    emb = {}
     for item in reference_data:
-        next_id = 0
-        emb = {}
         doc = calculator.nlp(item["EssayText"])
         next_id, emb, id_list, weights = calculator.get_embeddings_ids_weights(
             doc, next_id, emb, method)
         processed_refs[item["Id"]] = {
-            "next_id": next_id,
-            "emb": emb,
             "id_list": id_list,
             "weights": weights
         }
 
-    return processed_refs
+    return processed_refs, next_id, emb
 
 
 st = time.time()
@@ -78,7 +73,7 @@ calculator = EMDMetrics(model)
 print("Loaded model", time.time() - st)
 
 st = time.time()
-processed_refs = get_all_ref_emb_weights()
+processed_refs, next_id, emb = get_all_ref_emb_weights()
 print("Done preprocessing references", time.time() - st)
 
 
@@ -92,10 +87,12 @@ if os.path.isfile(results_file_name):
     max_id = final_results["candidate_id"].max()
     final_results = final_results.to_dict("records")
     for i in range(len(candidates_data)):
-        if candidates_data["Id"] == max_id:
-            idx = i
+        if candidates_data[i]["Id"] == max_id:
+            idx = i + 1
             break
-    print("File already present. Continuing from ID:", max_id)
+    print("File already present.")
+    print("Completed till ID:", max_id)
+    print("Continuing from ID:", candidates_data[idx]["Id"])
 
 else:
     final_results = []
@@ -110,20 +107,18 @@ else:
     while idx < len(candidates_data):
         candidate = candidates_data[idx]
         try:
-            resp = calculate_similarity(candidate)
+            resp = calculate_similarity(candidate, next_id, emb)
             final_results.extend(resp)
         except:
             print("ERROR WHILE PROCESSING:", candidate["Id"])
 
-        if idx % 50 == 0:
+        if idx % 100 == 0:
             final_results_df = pd.DataFrame(final_results)
             final_results_df.to_csv(results_file_name, sep="\t", index=False)
         idx += 1
 
-
 print("Done with similarity")
 final_results_df = pd.DataFrame(final_results)
 print("Created Dataframe")
-final_results_df.to_csv("../results/"+results_file_name +
-                        ".tsv", sep="\t", index=False)
+final_results_df.to_csv(results_file_name, sep="\t", index=False)
 print("Finished writing file")
