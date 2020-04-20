@@ -64,14 +64,17 @@ def data(df):
 
 
     ref = df.loc[(df['Score1']==1) & (df['EssaySet']!=3)]
-    ref.head(5)
-    ref.loc[0]['EssaySet']
+    # ref.head(5)
+    # ref.loc[0]['EssaySet']
 
 
     # Genearting the corpus
 
     reference_corpus = []
     candidate_corpus = []
+    reference_id = []
+    candidate_id = []
+    candidate_scores = []
 
     for i in essay_set_list:
         ref = reference.loc[reference['EssaySet']==i]
@@ -82,23 +85,43 @@ def data(df):
         
         ref_list = []
         cand_list = []
+        cand_id = []
+        ref_id = []
+        score = []
         
         for j in range(count_ref):
             ref_list.append(list(ref.iloc[j]['EssayText'].split()))
+            ref_id.append(ref.iloc[j]['Id'])
         ref_tuple = (i, ref_list)
+        ref_id_tuple = (i, ref_id)
         reference_corpus.append(ref_tuple)
+        reference_id.append(ref_id_tuple)
         
         for j in range(count_cand):
             cand_list.append(list(cand.iloc[j]['EssayText'].split()))
+            cand_id.append(cand.iloc[j]['Id'])
+            score.append(cand.iloc[j]['Score1'])
         cand_tuple = (i, cand_list)
+        cand_id_tuple = (i, cand_id)
+        score_tuple = (i, score)
+
         candidate_corpus.append(cand_tuple)
+        candidate_id.append(cand_id_tuple)
+        candidate_scores.append(score_tuple)
 
     reference_corpus = dict(reference_corpus)
     candidate_corpus = dict(candidate_corpus)
+    reference_id = dict(reference_id)
+    candidate_id = dict(candidate_id)
+    candidate_scores = dict(candidate_scores)
 
 
     reference_corpus = list(reference_corpus.values())
     candidate_corpus = list(candidate_corpus.values())
+    reference_id = list(reference_id.values())
+    candidate_id = list(candidate_id.values())
+    candidate_scores = list(candidate_scores.values())
+
 
 
     new_reference_corpus = []
@@ -123,4 +146,4 @@ def data(df):
     reference_corpus = list(new_reference_corpus.values())
     candidate_corpus = list(new_candidate_corpus.values())
 
-    return reference_corpus, candidate_corpus
+    return reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores, max_score_list
