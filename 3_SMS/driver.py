@@ -26,15 +26,16 @@ def calculate_similarity(candidate, next_id, emb):
         nbow[id] = (id, ref_id_list, ref_weights)
 
     calc = WMD(emb, nbow, vocabulary_min=1)
-    dist = calc.nearest_neighbors(
+    distances = calc.nearest_neighbors(
         "hypothesis", k=len(processed_refs), early_stop=1)
 
-    for id, score in dist:
-        similarity = np.exp(-score)
+    for id, dist in distances:
+        similarity = np.exp(-dist)
         similarities.append({
             "candidate_id": candidate["Id"],
             "reference_id": id,
             "similarity": similarity,
+            "dist": dist,
             "score": candidate["Score1"]
         })
     print("Time taken for candidate " +

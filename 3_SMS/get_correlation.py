@@ -1,12 +1,29 @@
 from scipy.stats import spearmanr, pearsonr, kendalltau
 import sys
 import pandas as pd
-results_file = sys.argv[1]
 
-results = pd.read_csv(results_file, sep="\t")
+if len(sys.argv) > 3:
+    results_file = sys.argv[1]
+    field = sys.argv[2]
+    agg = sys.argv[3]
+    results = pd.read_csv(results_file, sep="\t")
+    groups = results.groupby("candidate_id")
+    similarity = []
+    score = []
+    for candidate_id, group in groups:
+        score.append(group["score"].mean())
+        if agg == "mean" or agg == "avg":
+            similarity.append(group[field].mean())
+        elif agg == "max":
+            similarity.append(group[field].max())
 
-similarity = results["similarity score"].tolist()
-score = results["score"].tolist()
+else:
+    results_file = sys.argv[1]
+    field = sys.argv[2]
+    results = pd.read_csv(results_file, sep="\t")
+    similarity = results[field].tolist()
+    score = results["score"].tolist()
+
 
 scorr = spearmanr(similarity, score)
 # print("File:", results_file)
