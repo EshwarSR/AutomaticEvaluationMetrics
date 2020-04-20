@@ -1,0 +1,21 @@
+
+CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
+To initialize your shell, run
+
+    $ conda init <SHELL_NAME>
+
+Currently supported shells are:
+  - bash
+  - fish
+  - tcsh
+  - xonsh
+  - zsh
+  - powershell
+
+See 'conda init --help' for more information and options.
+
+IMPORTANT: You may need to close and restart your shell after running 'conda init'.
+
+
+/var/spool/slurmd/job10935/slurm_script: line 13: 88977 Aborted                 (core dumped) python -u driver.py ../data/candidates_data.tsv elmo s+wms > logs/redirect_elmo_s+wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
+Done

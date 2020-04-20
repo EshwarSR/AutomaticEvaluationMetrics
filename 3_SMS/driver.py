@@ -5,6 +5,9 @@ import sys
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
 from wmd import WMD
 import numpy as np
+import os
+
+REFERENCE_FILE = "../data/reference_data.tsv"
 
 
 def calculate_similarity(candidate):
@@ -43,7 +46,7 @@ def calculate_similarity(candidate):
 
 
 def get_all_ref_emb_weights():
-    reference_data = pd.read_csv("../data/reference_data.tsv", sep="\t")
+    reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
     reference_data = reference_data.to_dict("records")
     processed_refs = {}
 
@@ -64,31 +67,63 @@ def get_all_ref_emb_weights():
 
 
 st = time.time()
-model = sys.argv[1]
-method = sys.argv[2]
+CANDIDATES_FILE = sys.argv[1]
+model = sys.argv[2]
+method = sys.argv[3]
 parallel = False
-candidates_data = pd.read_csv("../data/cand_100.tsv", sep="\t")
+candidates_data = pd.read_csv(CANDIDATES_FILE, sep="\t")
 candidates_data = candidates_data.to_dict("records")
 
 calculator = EMDMetrics(model)
 print("Loaded model", time.time() - st)
 
+st = time.time()
 processed_refs = get_all_ref_emb_weights()
-print("Done preprocessing references")
+print("Done preprocessing references", time.time() - st)
 
-final_results = []
+
+results_file_name = CANDIDATES_FILE.rsplit("/", 1)[1]
+results_file_name = results_file_name.split(".")[0]
+results_file_name = results_file_name + "_" + model + "_" + method + ".tsv"
+results_file_name = "../results/" + results_file_name
+
+if os.path.isfile(results_file_name):
+    final_results = pd.read_csv(results_file_name, sep="\t")
+    max_id = final_results["candidate_id"].max()
+    final_results = final_results.to_dict("records")
+    for i in range(len(candidates_data)):
+        if candidates_data["Id"] == max_id:
+            idx = i
+            break
+    print("File already present. Continuing from ID:", max_id)
+
+else:
+    final_results = []
+    idx = 0
+
 if parallel == True:
     with ProcessPoolExecutor(max_workers=2) as executor:
         for resp in executor.map(calculate_similarity, candidates_data):
             final_results.extend(resp)
 else:
-    for candidate in candidates_data:
-        resp = calculate_similarity(candidate)
-        final_results.extend(resp)
+    # for idx, candidate in enumerate(candidates_data):
+    while idx < len(candidates_data):
+        candidate = candidates_data[idx]
+        try:
+            resp = calculate_similarity(candidate)
+            final_results.extend(resp)
+        except:
+            print("ERROR WHILE PROCESSING:", candidate["Id"])
+
+        if idx % 50 == 0:
+            final_results_df = pd.DataFrame(final_results)
+            final_results_df.to_csv(results_file_name, sep="\t", index=False)
+        idx += 1
+
 
 print("Done with similarity")
-final_results = pd.DataFrame(final_results)
+final_results_df = pd.DataFrame(final_results)
 print("Created Dataframe")
-final_results.to_csv("../results/cand_100_"+model+"_" +
-                     method+".tsv", sep="\t", index=False)
+final_results_df.to_csv("../results/"+results_file_name +
+                        ".tsv", sep="\t", index=False)
 print("Finished writing file")
