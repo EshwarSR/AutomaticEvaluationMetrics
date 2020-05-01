@@ -1,0 +1,11 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/cs-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-csen-ref.en
+MODEL bert
+METHOD sms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.CUNI-Transformer.5560.cs-en
+Score: 0.056616763061847236
+Done in 1169.3815579414368
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-A.0.cs-en

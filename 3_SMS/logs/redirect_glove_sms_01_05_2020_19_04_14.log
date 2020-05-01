@@ -1,0 +1,11 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/de-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-deen-ref.en
+MODEL glove
+METHOD sms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.JHU.5706.de-en
+Score: 0.5282839787313096
+Done in 114.40653944015503
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.LMU-nmt.5756.de-en
