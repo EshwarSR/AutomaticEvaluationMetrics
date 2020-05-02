@@ -1,0 +1,45 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/fi-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-fien-ref.en
+MODEL glove
+METHOD sms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.CUNI-Kocmi.5619.fi-en
+Score: 0.3817420714946425
+Done in 141.37483406066895
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.HY-NMT-fi-en.5569.fi-en
+Score: 0.38665402356990664
+Done in 134.81447339057922
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.JUCBNMT.5559.fi-en
+Score: 0.30391728702213305
+Done in 137.81335616111755
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.NICT.5515.fi-en
+Score: 0.4012754851608597
+Done in 138.14600610733032
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-A.0.fi-en
+Score: 0.3701902687991838
+Done in 139.08088088035583
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-B.0.fi-en
+Score: 0.38153310737832774
+Done in 135.71578240394592
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-G.0.fi-en
+Score: 0.35301268115432055
+Done in 137.7776403427124
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.talp-upc.5423.fi-en
+Score: 0.3795642419749857
+Done in 137.03525948524475
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.uedin.5631.fi-en
+Score: 0.3927968866076995
+Done in 136.41580152511597
+=========================
+Fatal Python error: deallocating None
+
+Current thread 0x00007febe9936740 (most recent call first):

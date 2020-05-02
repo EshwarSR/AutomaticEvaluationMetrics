@@ -1,0 +1,45 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/fi-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-fien-ref.en
+MODEL bert
+METHOD s+wms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.CUNI-Kocmi.5619.fi-en
+Score: 0.008992083314963968
+Done in 742.6290366649628
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.HY-NMT-fi-en.5569.fi-en
+Score: 0.012398041577994446
+Done in 686.866283416748
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.JUCBNMT.5559.fi-en
+Score: 0.0017689562013416303
+Done in 698.2615053653717
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.NICT.5515.fi-en
+Score: 0.011097201385554778
+Done in 673.4584152698517
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-A.0.fi-en
+Score: 0.007139329273954685
+Done in 684.4391405582428
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-B.0.fi-en
+Score: 0.008843742530333105
+Done in 675.6235611438751
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-G.0.fi-en
+Score: 0.004738090089309648
+Done in 687.6284668445587
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.talp-upc.5423.fi-en
+Score: 0.009009092407202574
+Done in 673.7347218990326
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.uedin.5631.fi-en
+Score: 0.00947455940448578
+Done in 679.598949432373
+=========================
+Fatal Python error: deallocating None
+
+Current thread 0x00007f39fc9cc740 (most recent call first):
