@@ -17,5 +17,3 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-/var/spool/slurmd/job11373/slurm_script: line 13: 15666 Aborted                 (core dumped) python -u driver_wmt.py ../data/WMT18Data/system-outputs/newstest2018/de-en/ ../data/WMT18Data/references/newstest2018-deen-ref.en bert wms > logs/redirect_bert_wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
-Done

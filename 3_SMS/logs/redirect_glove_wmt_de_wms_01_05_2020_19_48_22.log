@@ -1,0 +1,73 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/de-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-deen-ref.en
+MODEL glove
+METHOD wms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.JHU.5706.de-en
+Score: 0.29315802240433525
+Done in 126.39584064483643
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.LMU-nmt.5756.de-en
+Score: 0.2678217480576247
+Done in 107.03707909584045
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.LMU-unsup.5650.de-en
+Score: 0.0975082253687172
+Done in 147.17433977127075
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.MLLP-UPV.5554.de-en
+Score: 0.2957152741696611
+Done in 167.01896977424622
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.NJUNMT-private.5406.de-en
+Score: 0.24223991284196858
+Done in 170.43906450271606
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.NTT.5666.de-en
+Score: 0.3067283023634512
+Done in 164.16571760177612
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.RWTH-UNSUPER.5482.de-en
+Score: 0.10682431022638686
+Done in 165.58845973014832
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.RWTH.5636.de-en
+Score: 0.3234631340796084
+Done in 134.75493741035461
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.UCAM.5690.de-en
+Score: 0.316164060325438
+Done in 150.77005696296692
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.Ubiqus-NMT.5635.de-en
+Score: 0.2888250724494399
+Done in 151.01758217811584
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.online-A.0.de-en
+Score: 0.2725204029366362
+Done in 152.03252243995667
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.online-B.0.de-en
+Score: 0.29365134683166083
+Done in 149.5102412700653
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.online-F.0.de-en
+Score: 0.14445694985802623
+Done in 123.37248539924622
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.online-G.0.de-en
+Score: 0.22463799692940373
+Done in 150.90310955047607
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.online-Y.0.de-en
+Score: 0.25218348970708715
+Done in 146.80344796180725
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/de-en/newstest2018.uedin.5766.de-en
+Score: 0.28476333802554343
+Done in 147.2297706604004
+=========================
+Fatal Python error: deallocating None
+
+Current thread 0x00007fe069f74740 (most recent call first):

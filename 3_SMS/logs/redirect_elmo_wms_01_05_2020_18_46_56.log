@@ -5,3 +5,7 @@ METHOD wms
 
 
 Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.CUNI-Transformer.5560.cs-en
+Score: 0.024007449908026727
+Done in 22634.3058757782
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-A.0.cs-en

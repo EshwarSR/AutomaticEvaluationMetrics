@@ -1,0 +1,26 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/cs-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-csen-ref.en
+MODEL bert
+METHOD s+wms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.CUNI-Transformer.5560.cs-en
+Score: 0.03310118270827317
+Done in 1910.9479513168335
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-A.0.cs-en
+Score: 0.018404850172580638
+Done in 3287.7000834941864
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-B.0.cs-en
+Score: 0.03129014518273777
+Done in 3212.570025920868
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-G.0.cs-en
+Score: 0.010445206299792448
+Done in 3278.062943458557
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.uedin.5561.cs-en
+Score: 0.026120588819303892
+Done in 3227.6390380859375
+=========================

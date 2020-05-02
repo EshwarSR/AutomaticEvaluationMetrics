@@ -10,6 +10,6 @@
 #source /home/eshwarsr/IISc-ML-Project/virtual_env/bin/activate
 
 conda activate base
-python -u driver_wmt.py ../data/WMT18Data/system-outputs/newstest2018/et-en/ ../data/WMT18Data/references/newstest2018-eten-ref.en bert wms > logs/redirect_bert_wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
+python -u driver_wmt.py ../data/WMT18Data/system-outputs/newstest2018/et-en/ ../data/WMT18Data/references/newstest2018-eten-ref.en bert wms > logs/redirect_bert_wmt_et_wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
 
 echo "Done"
