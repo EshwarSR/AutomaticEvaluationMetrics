@@ -25,8 +25,11 @@ def get_scores(CANDIDATES_FILES, REFERENCES_FILE, MODEL, METHOD):
         st = time.time()
         method_results = []
         for cand, ref in zip(candidate_texts, reference_texts):
-            sim = calculator.get_similarity(cand, ref, METHOD)
-            method_results.append(sim)
+            try:
+                sim = calculator.get_similarity(cand, ref, METHOD)
+                method_results.append(sim)
+            except:
+                print("Error for:", cand)
         score = sum(method_results)/len(method_results)
         print("Score:", score)
         print("Done in", time.time() - st)
