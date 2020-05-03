@@ -5,3 +5,22 @@ METHOD sms
 
 
 Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.NICT.5708.tr-en
+Score: 0.03422349032366443
+Done in 903.949768781662
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-A.0.tr-en
+Score: 0.034210160478100285
+Done in 950.8254857063293
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-B.0.tr-en
+Score: 0.03263742252559362
+Done in 1065.0375020503998
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-G.0.tr-en
+Score: 0.036595087211065296
+Done in 924.3370070457458
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.uedin.5709.tr-en
+Score: 0.03306801893667257
+Done in 807.9651556015015
+=========================

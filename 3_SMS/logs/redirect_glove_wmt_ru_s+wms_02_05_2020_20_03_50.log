@@ -5,3 +5,27 @@ METHOD s+wms
 
 
 Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.Alibaba.5720.ru-en
+Score: 0.3065629813439682
+Done in 99.78623843193054
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.JHU.5675.ru-en
+Score: 0.2575007048870511
+Done in 104.41925597190857
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.afrl-ruen-syscomb.5440.ru-en
+Score: 0.26726184373286727
+Done in 101.7011604309082
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.online-A.0.ru-en
+Traceback (most recent call last):
+  File "driver_wmt.py", line 48, in <module>
+    get_scores(CANDIDATES_FILES, REFERENCES_FILE, MODEL, METHOD)
+  File "driver_wmt.py", line 28, in get_scores
+    sim = calculator.get_similarity(cand, ref, METHOD)
+  File "/home/eshwarsr/IISc-ML-Project/3_SMS/emd_metrics.py", line 156, in get_similarity
+    emb, nbow = self.get_emb_nbow(candidate, reference, method)
+  File "/home/eshwarsr/IISc-ML-Project/3_SMS/emd_metrics.py", line 143, in get_emb_nbow
+    can_doc, next_id, emb, method)
+  File "/home/eshwarsr/IISc-ML-Project/3_SMS/emd_metrics.py", line 115, in get_embeddings_ids_weights
+    weights = [1/(len(ids_list))] * len(ids_list)
+ZeroDivisionError: division by zero
