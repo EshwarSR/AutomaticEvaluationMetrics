@@ -1,0 +1,27 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/ru-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-ruen-ref.en
+MODEL glove
+METHOD sms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.Alibaba.5720.ru-en
+Score: 0.48693090584458315
+Done in 99.95792555809021
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.JHU.5675.ru-en
+Score: 0.44864443538726073
+Done in 105.38671588897705
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.afrl-ruen-syscomb.5440.ru-en
+Score: 0.4545913657870613
+Done in 105.47839331626892
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.online-A.0.ru-en
+Traceback (most recent call last):
+  File "driver_wmt.py", line 48, in <module>
+    get_scores(CANDIDATES_FILES, REFERENCES_FILE, MODEL, METHOD)
+  File "driver_wmt.py", line 28, in get_scores
+    sim = calculator.get_similarity(cand, ref, METHOD)
+  File "/home/eshwarsr/IISc-ML-Project/3_SMS/emd_metrics.py", line 159, in get_similarity
+    0][1]
+IndexError: list index out of range

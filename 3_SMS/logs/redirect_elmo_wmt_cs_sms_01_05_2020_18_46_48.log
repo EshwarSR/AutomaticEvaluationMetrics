@@ -1,0 +1,26 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/cs-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-csen-ref.en
+MODEL elmo
+METHOD sms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.CUNI-Transformer.5560.cs-en
+Score: 0.06461637596340677
+Done in 997.0149109363556
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-A.0.cs-en
+Score: 0.04123231793554827
+Done in 1266.0516617298126
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-B.0.cs-en
+Score: 0.058971335276854504
+Done in 1090.8207805156708
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-G.0.cs-en
+Score: 0.02864508561891615
+Done in 935.4351422786713
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.uedin.5561.cs-en
+Score: 0.0532645901897004
+Done in 887.7357437610626
+=========================

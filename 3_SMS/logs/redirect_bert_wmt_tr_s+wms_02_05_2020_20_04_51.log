@@ -1,0 +1,26 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/tr-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-tren-ref.en
+MODEL bert
+METHOD s+wms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.NICT.5708.tr-en
+Score: 0.017735785325370873
+Done in 724.9278681278229
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-A.0.tr-en
+Score: 0.018173261972912618
+Done in 680.3048906326294
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-B.0.tr-en
+Score: 0.01731375054200859
+Done in 671.7042245864868
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-G.0.tr-en
+Score: 0.020384442769887788
+Done in 680.2481422424316
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.uedin.5709.tr-en
+Score: 0.015316640917567625
+Done in 673.8700368404388
+=========================

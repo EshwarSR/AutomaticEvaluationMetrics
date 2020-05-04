@@ -1,0 +1,26 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/cs-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-csen-ref.en
+MODEL glove
+METHOD sms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.CUNI-Transformer.5560.cs-en
+Score: 0.46524881123532774
+Done in 92.87742328643799
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-A.0.cs-en
+Score: 0.4273179924581298
+Done in 97.44703841209412
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-B.0.cs-en
+Score: 0.4604540177276099
+Done in 95.512202501297
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.online-G.0.cs-en
+Score: 0.41712725082038493
+Done in 116.41542100906372
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/cs-en/newstest2018.uedin.5561.cs-en
+Score: 0.4531145183767169
+Done in 130.6183590888977
+=========================

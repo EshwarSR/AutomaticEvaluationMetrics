@@ -1,0 +1,26 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/tr-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-tren-ref.en
+MODEL glove
+METHOD wms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.NICT.5708.tr-en
+Score: 0.15908493352646058
+Done in 106.50224542617798
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-A.0.tr-en
+Score: 0.16959155494519318
+Done in 139.96010303497314
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-B.0.tr-en
+Score: 0.15889391020284752
+Done in 152.22960090637207
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-G.0.tr-en
+Score: 0.16766566529858823
+Done in 153.66706085205078
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.uedin.5709.tr-en
+Score: 0.15992337644538865
+Done in 150.5283854007721
+=========================
