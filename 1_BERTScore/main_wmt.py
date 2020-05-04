@@ -3,8 +3,8 @@ import sys
 import pandas as pd
 import numpy as np
 import os
-# import torch
-# from bert_score import score
+import torch
+from bert_score import score
 
 allcees = '../data/WMT18Data/system-outputs/newstest2018/'
 allrefs = '../data/WMT18Data/references/'
@@ -18,7 +18,7 @@ for csdir in cdirs:
 
 for csdir in act_dir:
 	stry = csdir[-5:-3] + csdir[-2:]
-	rs = allrefs + 'newstest2018-' + stry + '-ref.en'
+	rs = allrefs + '/newstest2018-' + stry + '-ref.en'
 	cses = os.listdir(csdir)
 
 	refs = []
