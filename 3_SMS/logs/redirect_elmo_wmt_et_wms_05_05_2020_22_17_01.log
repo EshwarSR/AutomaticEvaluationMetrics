@@ -1,0 +1,7 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/et-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-eten-ref.en
+MODEL elmo
+METHOD wms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.CUNI-Kocmi.5618.et-en
