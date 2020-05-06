@@ -5,3 +5,61 @@ METHOD wms
 
 
 Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.CUNI-Kocmi.5618.et-en
+Score: 0.005526668390031485
+Done in 1131.2008256912231
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.HY-NMT-et-en.5463.et-en
+Score: 0.009381593716124218
+Done in 1072.5863208770752
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.M4t1ss.5692.et-en
+Score: 0.009232897752829823
+Done in 1105.8463988304138
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.NICT.5664.et-en
+Score: 0.009362541003458753
+Done in 1094.838243484497
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.UnsupTartu.5722.et-en
+Score: 0.000401384654089341
+Done in 1123.5287909507751
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.neurotolge.ee.5398.et-en
+Score: 0.0058987966278992885
+Done in 1097.5252125263214
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.online-A.0.et-en
+Score: 0.006265554239228418
+Done in 1086.2188124656677
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.online-B.0.et-en
+Score: 0.007652276209665089
+Done in 1103.9160940647125
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.online-G.0.et-en
+Score: 0.0031483994273511606
+Done in 1125.4420552253723
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.talp-upc.5421.et-en
+Score: 0.006652208488184715
+Done in 1110.301466703415
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.tilde-c-nmt-comb.5718.et-en
+Score: 0.008357838579478555
+Done in 1217.7530324459076
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.tilde-c-nmt.5715.et-en
+Score: 0.008866034446220548
+Done in 1173.5485870838165
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.tilde-nc-nmt.5485.et-en
+Score: 0.012863124901431388
+Done in 1173.7762098312378
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/et-en/newstest2018.uedin.5562.et-en
+Score: 0.010784340206723975
+Done in 1086.1092762947083
+=========================
+Fatal Python error: deallocating None
+
+Current thread 0x00007fb5cafb0740 (most recent call first):
