@@ -1,0 +1,26 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/tr-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-tren-ref.en
+MODEL elmo
+METHOD wms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.NICT.5708.tr-en
+Score: 0.012098329999691378
+Done in 1123.3601200580597
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-A.0.tr-en
+Score: 0.011800203651868782
+Done in 1188.0160021781921
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-B.0.tr-en
+Score: 0.011214764119238002
+Done in 1251.4579887390137
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.online-G.0.tr-en
+Score: 0.013982965943029602
+Done in 1121.3977508544922
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/tr-en/newstest2018.uedin.5709.tr-en
+Score: 0.00931871379228378
+Done in 1204.9192900657654
+=========================
