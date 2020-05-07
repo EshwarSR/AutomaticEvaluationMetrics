@@ -1,0 +1,4 @@
+Type of Correlation	P	P-pval
+Spearman Rank Correlation	0.8901098901098902	1.9985404224781254e-05
+Pearson Correlation Coefficient	0.9731395361499742	5.117326997858936e-09
+Kendall Rank Correlation	0.7802197802197802	1.9192943300086156e-05

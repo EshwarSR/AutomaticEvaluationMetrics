@@ -61,7 +61,7 @@ for csdir in act_dir:
 			bleu.append(BLEU(refs[i], cands[i], 4))
 
 
-		outlist.append([sum(bleu)/len(bleu), hdf['HUMAN']])
+		outlist.append([sum(bleu)/len(bleu), hdf['HUMAN'].item()])
 
 	out = pd.DataFrame(outlist, columns = ["P", "H"])
 	print(out)
@@ -87,5 +87,5 @@ for csdir in act_dir:
 	corrs = pd.DataFrame(fin_list, columns = ["Type of Correlation", "P", "P-pval"])
 	print(corrs)
 	corrs.to_csv("corr-" + stry + ".tsv", sep="\t", index=False, header=True)
-	print(stry + "done")
+	print(stry + "done")	
 	print(todo)
