@@ -147,3 +147,14 @@ def data(df):
     candidate_corpus = list(new_candidate_corpus.values())
 
     return reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores, max_score_list
+
+def wmt_data_refs(words):
+    words = words.split()
+    newlist = []
+    newlist.append((remove_punctuation(to_lowercase(words))))
+    return newlist
+
+def wmt_data_cands(words):
+    words = words.split()
+    return remove_punctuation(to_lowercase(words))
+
