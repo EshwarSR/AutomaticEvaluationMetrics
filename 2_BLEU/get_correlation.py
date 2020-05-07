@@ -36,6 +36,10 @@ print("File:", results_file, "Correlation:",
 # plt.show()
 
 # sns.pairplot(df, hue='coolwarm')
-sns.pairplot(df, diag_kind='kde', plot_kws=dict(s=75, linewidth=1),
-                 diag_kws=dict(shade=True))
+# sns.pairplot(df, diag_kind='kde', plot_kws=dict(s=75, linewidth=1),
+#                  diag_kws=dict(shade=True))
+# sns.pairplot(df, diag_kind=)
+
+plt.hist(df.loc[df['score']==1]['similarity'], color='red', bins=50)
+plt.hist(df.loc[df['score']==0]['similarity'], color='blue', bins=50)
 plt.show()

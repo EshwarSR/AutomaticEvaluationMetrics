@@ -36,3 +36,4 @@ print(BLEU(reference_corpus[2], reference_corpus[2][50], 4))
 #         f.write("candidate_id\tsimilarity\tscore\n")
 #         for j in range(len(candidate_corpus[i])):
 #             f.write("{0}\t{1}\t{2}\n".format(candidate_id[i][j], bleu_scores[i][j], candidate_scores[i][j]))
+
