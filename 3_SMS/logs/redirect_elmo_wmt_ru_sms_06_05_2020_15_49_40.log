@@ -1,0 +1,39 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/ru-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-ruen-ref.en
+MODEL elmo
+METHOD sms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.Alibaba.5720.ru-en
+Score: 0.059798613459730005
+Done in 1141.662593126297
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.JHU.5675.ru-en
+Score: 0.039604306987544496
+Done in 1084.8323678970337
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.afrl-ruen-syscomb.5440.ru-en
+Score: 0.0418338759153824
+Done in 1092.2750549316406
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.online-A.0.ru-en
+Error for: 
+Score: 0.04505304716767234
+Done in 4032.2439408302307
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.online-B.0.ru-en
+Score: 0.052085335669396056
+Done in 5182.018601179123
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.online-F.0.ru-en
+Score: 0.015129762576137514
+Done in 7203.941910982132
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.online-G.0.ru-en
+Score: 0.05188096216312158
+Done in 5785.464929819107
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/ru-en/newstest2018.uedin.5739.ru-en
+Score: 0.051810479014730175
+Done in 4391.689000844955
+=========================

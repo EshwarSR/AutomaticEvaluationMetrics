@@ -1,0 +1,45 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/fi-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-fien-ref.en
+MODEL elmo
+METHOD wms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.CUNI-Kocmi.5619.fi-en
+Score: 0.006092232089509235
+Done in 1189.2959554195404
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.HY-NMT-fi-en.5569.fi-en
+Score: 0.008741251012303301
+Done in 1041.477058649063
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.JUCBNMT.5559.fi-en
+Score: 0.0007409006957967903
+Done in 1090.3175148963928
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.NICT.5515.fi-en
+Score: 0.007488459153885991
+Done in 1007.0597903728485
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-A.0.fi-en
+Score: 0.004916559313162343
+Done in 783.4566595554352
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-B.0.fi-en
+Score: 0.0058805065975916955
+Done in 965.9368567466736
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.online-G.0.fi-en
+Score: 0.0029523875117116903
+Done in 952.5479929447174
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.talp-upc.5423.fi-en
+Score: 0.006193308694990603
+Done in 860.8097298145294
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/fi-en/newstest2018.uedin.5631.fi-en
+Score: 0.006070314003494854
+Done in 583.759601354599
+=========================
+Fatal Python error: deallocating None
+
+Current thread 0x00007fef7d1bb740 (most recent call first):
