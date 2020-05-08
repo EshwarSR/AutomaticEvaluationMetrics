@@ -1,0 +1,67 @@
+candidates_folder ../data/WMT18Data/system-outputs/newstest2018/zh-en/
+REFERENCES_FILE ../data/WMT18Data/references/newstest2018-zhen-ref.en
+MODEL elmo
+METHOD sms 
+
+
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.Li-Muze.5736.zh-en
+Score: 0.033648227936696806
+Done in 1816.066320180893
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.NICT.5539.zh-en
+Score: 0.03440266927066942
+Done in 1715.8598442077637
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.NiuTrans.5740.zh-en
+Score: 0.037047779508008194
+Done in 1800.9108276367188
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.Tencent-ensemble-system.5742.zh-en
+Score: 0.038764162400311275
+Done in 1770.1328403949738
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.UCAM.5586.zh-en
+Score: 0.03614870295588204
+Done in 1761.471033334732
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.UMD.5681.zh-en
+Error for: 
+Score: 0.032015307972546383
+Done in 1720.422297000885
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.Unisound.5668.zh-en
+Score: 0.03720131121506221
+Done in 1756.9650177955627
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.Unisound.5712.zh-en
+Score: 0.03786911294283236
+Done in 1772.8349723815918
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.online-A.0.zh-en
+Score: 0.026797900547050994
+Done in 1745.9817428588867
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.online-B.0.zh-en
+Score: 0.04076718914506944
+Done in 1808.5146732330322
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.online-F.0.zh-en
+Score: 0.010810965919040846
+Done in 1792.6479668617249
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.online-G.0.zh-en
+Score: 0.012256090711544503
+Done in 1186.6122343540192
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.online-Y.0.zh-en
+Error for: 
+Score: 0.027796815545104773
+Done in 1156.8109414577484
+=========================
+Running against the candidates from: ../data/WMT18Data/system-outputs/newstest2018/zh-en/newstest2018.uedin.5652.zh-en
+Score: 0.031088554748987477
+Done in 1865.515875339508
+=========================
+Fatal Python error: deallocating None
+
+Current thread 0x00007fc22a821740 (most recent call first):
