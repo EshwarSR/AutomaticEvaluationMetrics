@@ -61,7 +61,7 @@ for csdir in act_dir:
 			bleu.append(BLEU(refs[i], cands[i], 4))
 
 
-		outlist.append([sum(bleu)/len(bleu), hdf['HUMAN']])
+		outlist.append([sum(bleu)/len(bleu), hdf['HUMAN'].item()])
 
 	out = pd.DataFrame(outlist, columns = ["P", "H"])
 	print(out)
