@@ -2,6 +2,7 @@
 __pycache__
 virtual_env
 .history/
+1_BERTScore/__pycache__/
 2_BLEU/.history/
 2_BLEU/__pycache__/
 3_SMS/__pycache__/
