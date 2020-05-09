@@ -7,7 +7,6 @@ import torch
 from bert_score import score
 from time import perf_counter
 
-torch.manual_seed(0)
 allcees = '../data/WMT18Data/system-outputs/newstest2018/'
 allrefs = '../data/WMT18Data/references/'
 human = '../data/WMT18Data/DA-syslevel.csv'
@@ -57,7 +56,7 @@ for csdir in act_dir:
         P, R, F1 = score(cands, refs, model_type=None, num_layers=None, verbose=False,
                          idf=True, device=None, batch_size=64, nthreads=4, all_layers=False,
                          lang="en", return_hash=False, rescale_with_baseline=True)
-        outlist.append([P.mean().item(), R.mean().item(), F1.mean().item(), hdf['HUMAN'].item()])
+        outlist.append([lp, sys, P.mean().item(), R.mean().item(), F1.mean().item(), hdf['HUMAN'].item()])
         # P, R, F1 = (torch.rand(1), torch.rand(1), torch.rand(1))
         # outlist.append([lp, sys, P.item(), R.item(), F1.item(), hdf['HUMAN'].item()])
         end = perf_counter()
@@ -87,10 +86,10 @@ for csdir in act_dir:
     finlist.append(lissy)
 
 out = pd.DataFrame(outlist, columns = ["LP", "SYSTEM", "BERTScore RoBERTa MNLI (idf) P", "BERTScore RoBERTa MNLI (idf) R", "BERTScore RoBERTa MNLI (idf) F1", "HUMAN"])
-print(out)
+# print(out)
 out.to_csv("scores.tsv", sep="\t", index=False, header=True)
 
 oyt = pd.DataFrame(finlist, columns = ["metric", "BERTScore RoBERTa MNLI (idf) P", "BERTScore RoBERTa MNLI (idf) P", "BERTScore RoBERTa MNLI (idf) P", "BERTScore RoBERTa MNLI (idf) R", "BERTScore RoBERTa MNLI (idf) R", "BERTScore RoBERTa MNLI (idf) R", "BERTScore RoBERTa MNLI (idf) F1", "BERTScore RoBERTa MNLI (idf) F1", "BERTScore RoBERTa MNLI (idf) F1"])
 oyt = oyt.T
-print(oyt)
+# print(oyt)
 oyt.to_csv("corr.tsv", sep="\t", index=True, header=False)
