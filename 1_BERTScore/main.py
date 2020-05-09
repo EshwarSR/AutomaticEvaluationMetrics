@@ -6,8 +6,8 @@ import os
 import torch
 from bert_score import score
 from time import perf_counter
-import tracemalloc
 
+torch.manual_seed(0)
 allcees = '../data/WMT18Data/system-outputs/newstest2018/'
 allrefs = '../data/WMT18Data/references/'
 human = '../data/WMT18Data/DA-syslevel.csv'
@@ -20,6 +20,8 @@ for csdir in cdirs:
         todo += [csdir]
         act_dir += [allcees + csdir]
 
+finlist = [["correlation", "Spearman", "Pearson", "Kendall", "Spearman", "Pearson", "Kendall", "Spearman", "Pearson", "Kendall"]]
+outlist = []
 for csdir in act_dir:
     stry = csdir[-5:-3] + csdir[-2:]
     rs = allrefs + 'newstest2018-' + stry + '-ref.en'
@@ -32,8 +34,6 @@ for csdir in act_dir:
         if not line:
             break
         refs.append(line)
-
-    outlist = []
     for cs in cses:
         start = perf_counter()
         lp = csdir[-5:]
@@ -58,32 +58,39 @@ for csdir in act_dir:
                          idf=True, device=None, batch_size=64, nthreads=4, all_layers=False,
                          lang="en", return_hash=False, rescale_with_baseline=True)
         outlist.append([P.mean().item(), R.mean().item(), F1.mean().item(), hdf['HUMAN'].item()])
+        # P, R, F1 = (torch.rand(1), torch.rand(1), torch.rand(1))
+        # outlist.append([lp, sys, P.item(), R.item(), F1.item(), hdf['HUMAN'].item()])
         end = perf_counter()
-        print("LP : {0}   SYS: {1}   time taken: {2:5.3f}".format(lp, sys, end - start))
+        print("LP : {0:10}SYS: {1:30s}time taken: {2:5.3f}".format(lp, sys, end - start))
+        # print(outlist[-1])
+    sz = len(cses)
+    pees = [row[2] for row in outlist[-sz:]]
+    arrs = [row[3] for row in outlist[-sz:]]
+    effs = [row[4] for row in outlist[-sz:]]
+    hues = [row[5] for row in outlist[-sz:]]
 
-    out = pd.DataFrame(outlist, columns = ["P", "R", "F1", "H"])
-    # print(out)
-    out.to_csv("scores-" + stry + ".tsv", sep="\t", index=False, header=True)
+    lissy = [csdir[-5:]]
+    src = spearmanr(pees, hues)
+    pcc = pearsonr(pees, hues)
+    ktc = kendalltau(pees, hues)
+    lissy += [src.correlation, pcc[0], ktc[0]]
 
-    cp = spearmanr(out['P'], out['H'])
-    cr = spearmanr(out['R'], out['H'])
-    cf1 = spearmanr(out['F1'], out['H'])
-    spearman_corrlist = [['Spearman Rank Correlation', cp.correlation, cp.pvalue, cr.correlation, cr.pvalue, cf1.correlation, cf1.pvalue]]
+    src = spearmanr(arrs, hues)
+    pcc = pearsonr(arrs, hues)
+    ktc = kendalltau(arrs, hues)
+    lissy += [src.correlation, pcc[0], ktc[0]]
 
-    cp = pearsonr(out['P'], out['H'])
-    cr = pearsonr(out['R'], out['H'])
-    cf1 = pearsonr(out['F1'], out['H'])
-    pearson_corrlist = [['Pearson Correlation Coefficient', cp[0], cp[1], cr[0], cr[1], cf1[0], cf1[1]]]
+    src = spearmanr(effs, hues)
+    pcc = pearsonr(effs, hues)
+    ktc = kendalltau(effs, hues)
+    lissy += [src.correlation, pcc[0], ktc[0]]
+    finlist.append(lissy)
 
-    cp = kendalltau(out['P'], out['H'])
-    cr = kendalltau(out['R'], out['H'])
-    cf1 = kendalltau(out['F1'], out['H'])
-    kend_corrlist = [['Kendall Rank Correlation', cp[0], cp[1], cr[0], cr[1], cf1[0], cf1[1]]]
+out = pd.DataFrame(outlist, columns = ["LP", "SYSTEM", "BERTScore RoBERTa MNLI (idf) P", "BERTScore RoBERTa MNLI (idf) R", "BERTScore RoBERTa MNLI (idf) F1", "HUMAN"])
+print(out)
+out.to_csv("scores.tsv", sep="\t", index=False, header=True)
 
-    fin_list = spearman_corrlist + pearson_corrlist + kend_corrlist
-
-    corrs = pd.DataFrame(fin_list, columns = ["Type of Correlation", "P", "P-pval", "R", "R-pval", "F1", "F1-pval"])
-    # print(corrs)
-    corrs.to_csv("corr-" + stry + ".tsv", sep="\t", index=False, header=True)
-    print(stry + " done.")
-    print(todo)
+oyt = pd.DataFrame(finlist, columns = ["metric", "BERTScore RoBERTa MNLI (idf) P", "BERTScore RoBERTa MNLI (idf) P", "BERTScore RoBERTa MNLI (idf) P", "BERTScore RoBERTa MNLI (idf) R", "BERTScore RoBERTa MNLI (idf) R", "BERTScore RoBERTa MNLI (idf) R", "BERTScore RoBERTa MNLI (idf) F1", "BERTScore RoBERTa MNLI (idf) F1", "BERTScore RoBERTa MNLI (idf) F1"])
+oyt = oyt.T
+print(oyt)
+oyt.to_csv("corr.tsv", sep="\t", index=True, header=False)
