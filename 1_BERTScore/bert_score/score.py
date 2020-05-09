@@ -19,8 +19,9 @@ from .utils import (get_model, get_idf_dict, bert_cos_score_idf,
 
 __all__ = ['score', 'plot_example']
 
-def score(cands, refs, model_type=None, num_layers=None, verbose=False, 
-          idf=False, device=None, batch_size=64, nthreads=4, all_layers=False, 
+
+def score(cands, refs, model_type=None, num_layers=None, verbose=False,
+          idf=False, device=None, batch_size=64, nthreads=4, all_layers=False,
           lang=None, return_hash=False, rescale_with_baseline=False):
     """
     BERTScore metric.
@@ -48,11 +49,12 @@ def score(cands, refs, model_type=None, num_layers=None, verbose=False,
     Return:
         - :param: `(P, R, F)`: each is of shape (N); N = number of input
                   candidate reference pairs. if returning hashcode, the
-                  output will be ((P, R, F), hashcode). If a candidate have 
-                  multiple references, the returned score of this candidate is 
+                  output will be ((P, R, F), hashcode). If a candidate have
+                  multiple references, the returned score of this candidate is
                   the *best* score among all references.
     """
-    assert len(cands) == len(refs), "Different number of candidates and references"
+    assert len(cands) == len(
+        refs), "Different number of candidates and references"
 
     assert lang is not None or model_type is not None, \
         'Either lang or model_type should be specified'
@@ -134,20 +136,23 @@ def score(cands, refs, model_type=None, num_layers=None, verbose=False,
 
             all_preds = (all_preds - baselines) / (1 - baselines)
         else:
-            print(f'Warning: Baseline not Found for {model_type} on {lang} at {baseline_path}', file=sys.stderr)
+            print(
+                f'Warning: Baseline not Found for {model_type} on {lang} at {baseline_path}', file=sys.stderr)
 
-    out = all_preds[..., 0], all_preds[..., 1], all_preds[..., 2] # P, R, F
+    out = all_preds[..., 0], all_preds[..., 1], all_preds[..., 2]  # P, R, F
 
     if verbose:
         time_diff = time.perf_counter() - start
-        print(f'done in {time_diff:.2f} seconds, {len(refs) / time_diff:.2f} sentences/sec')
+        print(
+            f'done in {time_diff:.2f} seconds, {len(refs) / time_diff:.2f} sentences/sec')
 
     if return_hash:
         return tuple([out, get_hash(model_type, num_layers, idf, rescale_with_baseline)])
 
     return out
 
-def plot_example(candidate, reference, model_type=None, num_layers=None, lang=None, 
+
+def plot_example(candidate, reference, model_type=None, num_layers=None, lang=None,
                  rescale_with_baseline=False, fname=''):
     """
     BERTScore metric.
@@ -196,18 +201,20 @@ def plot_example(candidate, reference, model_type=None, num_layers=None, lang=No
     idf_dict[tokenizer.cls_token_id] = 0
 
     hyp_embedding, masks, padded_idf = get_bert_embedding([candidate], model, tokenizer, idf_dict,
-                                                         device=device, all_layers=False)
+                                                          device=device, all_layers=False)
     ref_embedding, masks, padded_idf = get_bert_embedding([reference], model, tokenizer, idf_dict,
-                                                         device=device, all_layers=False)
+                                                          device=device, all_layers=False)
     ref_embedding.div_(torch.norm(ref_embedding, dim=-1).unsqueeze(-1))
     hyp_embedding.div_(torch.norm(hyp_embedding, dim=-1).unsqueeze(-1))
     sim = torch.bmm(hyp_embedding, ref_embedding.transpose(1, 2))
     sim = sim.squeeze(0).cpu()
 
     # remove [CLS] and [SEP] tokens
-    r_tokens = [tokenizer.decode([i]) for i in sent_encode(tokenizer, reference)][1:-1]
-    h_tokens = [tokenizer.decode([i]) for i in sent_encode(tokenizer, candidate)][1:-1]
-    sim = sim[1:-1,1:-1]
+    r_tokens = [tokenizer.decode([i])
+                for i in sent_encode(tokenizer, reference)][1:-1]
+    h_tokens = [tokenizer.decode([i])
+                for i in sent_encode(tokenizer, candidate)][1:-1]
+    sim = sim[1:-1, 1:-1]
 
     if rescale_with_baseline:
         baseline_path = os.path.join(
@@ -220,7 +227,8 @@ def plot_example(candidate, reference, model_type=None, num_layers=None, lang=No
             )[1:].float()
             sim = (sim - baselines[2].item()) / (1 - baselines[2].item())
         else:
-            print(f'Warning: Baseline not Found for {model_type} on {lang} at {baseline_path}', file=sys.stderr)
+            print(
+                f'Warning: Baseline not Found for {model_type} on {lang} at {baseline_path}', file=sys.stderr)
 
     fig, ax = plt.subplots(figsize=(len(r_tokens), len(h_tokens)))
     im = ax.imshow(sim, cmap='Blues', vmin=0, vmax=1)

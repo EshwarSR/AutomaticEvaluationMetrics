@@ -10,6 +10,6 @@
 #source /home/eshwarsr/IISc-ML-Project/virtual_env/bin/activate
 
 conda activate base
-python -u driver_wmt.py ../data/WMT18Data/system-outputs/newstest2018/ru-en/ ../data/WMT18Data/references/newstest2018-ruen-ref.en elmo wms > logs/redirect_elmo_wmt_ru_wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
+python -u driver_wmt.py ../data/WMT18Data/system-outputs/newstest2018/zh-en/ ../data/WMT18Data/references/newstest2018-zhen-ref.en elmo wms > logs/redirect_elmo_wmt_zh_wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
 
 echo "Done"
