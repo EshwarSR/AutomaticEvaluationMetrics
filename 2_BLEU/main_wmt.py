@@ -23,6 +23,9 @@ for csdir in cdirs:
 		todo += [csdir]
 		act_dir += [allcees + csdir]
 
+finlist = [["correlation", "Spearman", "Pearson", "Kendall"]]
+outlist = []
+
 for csdir in act_dir:
 	stry = csdir[-5:-3] + csdir[-2:]
 	rs = allrefs + 'newstest2018-' + stry + '-ref.en'
@@ -36,7 +39,7 @@ for csdir in act_dir:
 			break
 		refs.append(wmt_data_refs(line))
 
-	outlist = []
+	# outlist = []
 	for cs in cses:
 		bleu = []
 		lp = csdir[-5:]
@@ -61,31 +64,51 @@ for csdir in act_dir:
 			bleu.append(BLEU(refs[i], cands[i], 4))
 
 
-		outlist.append([sum(bleu)/len(bleu), hdf['HUMAN'].item()])
+		outlist.append([lp,sum(bleu)/len(bleu), hdf['HUMAN'].item()])
+	sz = len(cses)
+	pees = [row[1] for row in outlist[-sz:]]
+	hues = [row[2] for row in outlist[-sz:]]
 
-	out = pd.DataFrame(outlist, columns = ["P", "H"])
-	print(out)
-	out.to_csv("BLEU-scores-" + stry + ".tsv", sep="\t", index=False, header=True)
+	lissy = [csdir[-5:]]
+	src = spearmanr(pees, hues)
+	pcc = pearsonr(pees, hues)
+	ktc = kendalltau(pees, hues)
+	lissy += [src.correlation, pcc[0], ktc[0]]
 
-	cp = spearmanr(out['P'], out['H'])
-	# cr = spearmanr(out['R'], out['H'])
-	# cf1 = spearmanr(out['F1'], out['H'])
-	spearman_corrlist = [['Spearman Rank Correlation', cp.correlation, cp.pvalue]]
+	finlist.append(lissy)
 
-	cp = pearsonr(out['P'], out['H'])
-	# cr = pearsonr(out['R'], out['H'])
-	# cf1 = pearsonr(out['F1'], out['H'])
-	pearson_corrlist = [['Pearson Correlation Coefficient', cp[0], cp[1]]]
+out = pd.DataFrame(outlist, columns = ["LP", "BLEU P", "HUMAN"])
+# print(out)
+out.to_csv("BLEU_scores.tsv", sep="\t", index=False, header=True)
 
-	cp = kendalltau(out['P'], out['H'])
-	# cr = kendalltau(out['R'], out['H'])
-	# cf1 = kendalltau(out['F1'], out['H'])
-	kend_corrlist = [['Kendall Rank Correlation', cp[0], cp[1]]]
+oyt = pd.DataFrame(finlist, columns = ["LP", "BLEU P Spearmann", "BLEU P Pearson", "BLEU P KendallTau"])
+oyt = oyt.T
+# print(oyt)
+oyt.to_csv("BLEU_corr.tsv", sep="\t", index=True, header=False)
 
-	fin_list = spearman_corrlist + pearson_corrlist + kend_corrlist
+	# out = pd.DataFrame(outlist, columns = ["P", "H"])
+	# print(out)
+	# out.to_csv("BLEU-scores-" + stry + ".tsv", sep="\t", index=False, header=True)
 
-	corrs = pd.DataFrame(fin_list, columns = ["Type of Correlation", "P", "P-pval"])
-	print(corrs)
-	corrs.to_csv("corr-" + stry + ".tsv", sep="\t", index=False, header=True)
-	print(stry + "done")	
-	print(todo)
+	# cp = spearmanr(out['P'], out['H'])
+	# # cr = spearmanr(out['R'], out['H'])
+	# # cf1 = spearmanr(out['F1'], out['H'])
+	# spearman_corrlist = [['Spearman Rank Correlation', cp.correlation, cp.pvalue]]
+
+	# cp = pearsonr(out['P'], out['H'])
+	# # cr = pearsonr(out['R'], out['H'])
+	# # cf1 = pearsonr(out['F1'], out['H'])
+	# pearson_corrlist = [['Pearson Correlation Coefficient', cp[0], cp[1]]]
+
+	# cp = kendalltau(out['P'], out['H'])
+	# # cr = kendalltau(out['R'], out['H'])
+	# # cf1 = kendalltau(out['F1'], out['H'])
+	# kend_corrlist = [['Kendall Rank Correlation', cp[0], cp[1]]]
+
+	# fin_list = spearman_corrlist + pearson_corrlist + kend_corrlist
+
+	# corrs = pd.DataFrame(fin_list, columns = ["Type of Correlation", "P", "P-pval"])
+	# print(corrs)
+	# corrs.to_csv("corr-" + stry + ".tsv", sep="\t", index=False, header=True)
+	# print(stry + "done")	
+	# print(todo)
