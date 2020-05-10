@@ -3,8 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 br = '../results/WMT18_Results/'
-bdf = pd.read_csv(br + 'bertscore_scores.tsv', sep='\t')
-edf = pd.read_csv(br + 'WMT_EMD_metrics.csv', sep=',')
+bdf = pd.read_csv(br + 'BLEU_scores.tsv', sep='\t')
+edf = pd.read_csv(br + 'scores_almost.tsv', sep='\t')
 
 bz = bdf.columns.to_list()
 ez = edf.columns.to_list()
@@ -31,8 +31,8 @@ ndf.to_csv("scores_all.tsv", sep="\t", index=False, header=True)
 
 #####################################################################
 
-bdf = pd.read_csv(br + 'bertscore_corr.tsv', sep='\t')
-edf = pd.read_csv(br + 'WMT_EMD_correlations.csv', sep=',')
+bdf = pd.read_csv(br + 'BLEU_corr.tsv', sep='\t')
+edf = pd.read_csv(br + 'corr_almost.tsv', sep='\t')
 
 fdf = pd.DataFrame(columns=edf.columns.to_list())
 for col in edf.columns.to_list():

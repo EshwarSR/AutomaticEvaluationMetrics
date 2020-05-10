@@ -1,60 +1,93 @@
-# from rouge.rouge import Rouge
-
-# cand = ['what is going on', 'here we are going together']
-# ref = ['here we are going together'] * 2
-
-# rouge = Rouge()
-# scores = rouge.get_scores(cand, ref)
-
-# print(scores)
-import time
-from rouge.rouge import Rouge
+from scipy.stats import spearmanr, pearsonr, kendalltau
+import sys
 import pandas as pd
+import numpy as np
+import os
+from rouge.rouge import Rouge
+from time import perf_counter
 
-fn = '../../Official_Repo/IISc-ML-Project/data/asap_sas.tsv'
-df = pd.read_csv(fn, delimiter='\t')
+allcees = '../data/WMT18Data/system-outputs/newstest2018/'
+allrefs = '../data/WMT18Data/references/'
+human = '../data/WMT18Data/DA-syslevel.csv'
 
-can1 = df.loc[(df['EssaySet'] == 3) & (df['Score1'] != 2)]
-can1.reset_index(drop=True, inplace=True)
-cands = list(can1['EssayText'])
-print("Candidate Sentences: ", len(cands))
-# print(cands[0])
+act_dir = []
+todo = []
+cdirs = os.listdir(allcees)
+for csdir in cdirs:
+	if csdir[-2:] == 'en':
+		todo += [csdir]
+		act_dir += [allcees + csdir]
 
-ref1 = df.loc[(df['EssaySet'] == 3) & (df['Score1'] == 2)]
-ref1.reset_index(drop=True, inplace=True)
-refs = list(ref1['EssayText'])
-print("Reference Sentences: ", len(refs))
-# print(refs[0])
+finlist = [["correlation", "Spearman", "Pearson", "Kendall", "Spearman", "Pearson", "Kendall", "Spearman", "Pearson", "Kendall"]]
+outlist = []
+for csdir in act_dir:
+	stry = csdir[-5:-3] + csdir[-2:]
+	rs = allrefs + 'newstest2018-' + stry + '-ref.en'
+	cses = os.listdir(csdir)
 
-cany = cands
-cands = []
-for one in cany:
-	cands += [one] * len(refs)
-refs = refs * len(cany)
+	refs = []
+	fr = open(rs, "r", encoding='utf-8')
+	while True:
+		line = fr.readline()
+		if not line:
+			break
+		refs.append(line)
+	for cs in cses:
+		start = perf_counter()
+		lp = csdir[-5:]
+		sys = cs[13:-6]
+		hdf = pd.read_csv(human, sep=' ')
 
-assert len(cands) == len(refs), "cands and refs are different lengths"
+		hdf = hdf.loc[hdf['LP'] == lp]
+		hdf = hdf.loc[hdf['SYSTEM'] == sys]
+		hdf.reset_index(drop=True, inplace=True)
 
-# print(len(cands), type(cands))
-# print(len(refs), type(refs))
+		cands = []
+		fc = open(csdir + '/' + cs, "r", encoding='utf-8')
+		while True:
+			line = fc.readline()
+			if not line:
+				break
+			cands.append(line)
 
+		assert len(cands) == len(refs)
 
-rouge = Rouge()
-start_time = time.time()
-scores = rouge.get_scores(cands[:100], refs[:100])
-end_time = time.time()
-diff = (end_time - start_time) / 60
+		rouge = Rouge()
+		scores = rouge.get_scores(cands, refs)
+		R1 = [one['rouge-1']['f'] for one in scores]
+		R2 = [one['rouge-2']['f'] for one in scores]
+		R3 = [one['rouge-l']['f'] for one in scores]
+		outlist.append([lp, sys, np.mean(R1), np.mean(R2), np.mean(R3), hdf['HUMAN'].item()])
+		end = perf_counter()
+		print("LP : {0:10}SYS: {1:30s}time taken: {2:5.3f}".format(lp, sys, end - start))
+	sz = len(cses)
+	pees = [row[2] for row in outlist[-sz:]]
+	arrs = [row[3] for row in outlist[-sz:]]
+	effs = [row[4] for row in outlist[-sz:]]
+	hues = [row[5] for row in outlist[-sz:]]
 
-# print(scores)
-# or
-# scores = rouge.get_scores(hyps, refs, avg=True)
-# print(len(scores))
-print(scores[0]['rouge-l']['f'])
-print("--- {0:5.3} minutes ---".format(diff))
+	lissy = [csdir[-5:]]
+	src = spearmanr(pees, hues)
+	pcc = pearsonr(pees, hues)
+	ktc = kendalltau(pees, hues)
+	lissy += [src.correlation, pcc[0], ktc[0]]
 
-# odf = pd.DataFrame()
-# odf['cand id'] = can1['Id']
-# odf['similarity score'] = pd.DataFrame(scores[:]['rouge-l']['f'])
-# odf['score'] = can1['Score1']
-# odf.reset_index(drop=True, inplace=True)
-# print(odf.columns)
-# odf.to_csv("outs.tsv", sep="\t", index=False, header=True)
+	src = spearmanr(arrs, hues)
+	pcc = pearsonr(arrs, hues)
+	ktc = kendalltau(arrs, hues)
+	lissy += [src.correlation, pcc[0], ktc[0]]
+
+	src = spearmanr(effs, hues)
+	pcc = pearsonr(effs, hues)
+	ktc = kendalltau(effs, hues)
+	lissy += [src.correlation, pcc[0], ktc[0]]
+	finlist.append(lissy)
+
+out = pd.DataFrame(outlist, columns = ["LP", "SYSTEM", "ROUGE-1", "ROUGE-2", "ROUGE-L", "HUMAN"])
+# print(out)
+out.to_csv("scores.tsv", sep="\t", index=False, header=True)
+
+oyt = pd.DataFrame(finlist, columns = ["metric", "ROUGE-1", "ROUGE-1", "ROUGE-1", "ROUGE-2", "ROUGE-2", "ROUGE-2", "ROUGE-L", "ROUGE-L", "ROUGE-L"])
+oyt = oyt.T
+# print(oyt)
+oyt.to_csv("corr.tsv", sep="\t", index=True, header=False)
