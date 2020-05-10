@@ -64,10 +64,10 @@ for csdir in act_dir:
 			bleu.append(BLEU(refs[i], cands[i], 4))
 
 
-		outlist.append([lp,sum(bleu)/len(bleu), hdf['HUMAN'].item()])
+		outlist.append([lp, sys, sum(bleu)/len(bleu), hdf['HUMAN'].item()])
 	sz = len(cses)
-	pees = [row[1] for row in outlist[-sz:]]
-	hues = [row[2] for row in outlist[-sz:]]
+	pees = [row[2] for row in outlist[-sz:]]
+	hues = [row[3] for row in outlist[-sz:]]
 
 	lissy = [csdir[-5:]]
 	src = spearmanr(pees, hues)
@@ -77,7 +77,7 @@ for csdir in act_dir:
 
 	finlist.append(lissy)
 
-out = pd.DataFrame(outlist, columns = ["LP", "BLEU P", "HUMAN"])
+out = pd.DataFrame(outlist, columns = ["LP", "SYSTEM", "BLEU P", "HUMAN"])
 # print(out)
 out.to_csv("BLEU_scores.tsv", sep="\t", index=False, header=True)
 
