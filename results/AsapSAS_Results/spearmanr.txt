@@ -1,0 +1,19 @@
+Spearman Rank Correlation for:
+
+BLEU				: r = 0.050, p = 0.055
+ROUGE-1			: r = 0.008, p = 0.774
+ROUGE-2			: r =-0.001, p = 0.969
+ROUGE-L			: r = 0.027, p = 0.311
+BERTScore		: r = 0.079, p = 0.002
+Using BERT
+SMS				: r = 0.070, p = 0.007
+WMS				: r = 0.034, p = 0.196
+S+WMS			: r = 0.048, p = 0.068
+Using ELMo
+SMS				: r = 0.063, p = 0.017
+WMS				: r = 0.015, p = 0.569
+S+WMS			: r = 0.031, p = 0.245
+Using GloVe
+SMS				: r = 0.116, p = 9.517e-06
+WMS				: r = 0.082, p = 0.002
+S+WMS			: r = 0.090, p = 0.001
