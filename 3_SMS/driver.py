@@ -55,6 +55,7 @@ def calculate_similarity(candidate, next_id, emb):
 
 def get_all_ref_emb_weights():
     reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
+    print("Number of references:", len(reference_data))
     reference_data = reference_data.to_dict("records")
     processed_refs = {}
     next_id = 0
@@ -77,6 +78,7 @@ model = sys.argv[1]
 method = sys.argv[2]
 parallel = False
 candidates_data = pd.read_csv(CANDIDATES_FILE, sep="\t")
+print("Number of candidates:", len(candidates_data))
 candidates_data = candidates_data.to_dict("records")
 
 calculator = EMDMetrics(model)
