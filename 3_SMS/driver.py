@@ -92,7 +92,7 @@ print("Done preprocessing references", time.time() - st)
 results_file_name = CANDIDATES_FILE.rsplit("/", 1)[1]
 results_file_name = results_file_name.split(".")[0]
 results_file_name = results_file_name + "_" + model + "_" + method + ".tsv"
-results_file_name = "../results/" + results_file_name
+results_file_name = "../results/asap_aes_results/SMS_against_one_ref/" + results_file_name
 
 if os.path.isfile(results_file_name):
     final_results = pd.read_csv(results_file_name, sep="\t")

@@ -18,12 +18,13 @@ data = pd.read_excel("../data/asap_aes.xlsx")
 
 # Essay 3 data
 data = data[data["essay_set"] == 3]
-candidates_data = data[data["domain1_score"] != 3]
+data.to_csv("../data/aes_candidates_data.tsv", sep="\t", index=False)
+# candidates_data = data[data["domain1_score"] != 3]
 
-print("Total candidates data:", len(candidates_data))
-candidates_data.to_csv("../data/aes_candidates_data.tsv",
-                       sep="\t", index=False)
+# print("Total candidates data:", len(candidates_data))
+# candidates_data.to_csv("../data/aes_candidates_data.tsv",
+#                        sep="\t", index=False)
 
-reference_data = data[data["domain1_score"] == 3]
-print("Total reference data:", len(reference_data))
-reference_data.to_csv("../data/aes_reference_data.tsv", sep="\t", index=False)
+# reference_data = data[data["domain1_score"] == 3]
+# print("Total reference data:", len(reference_data))
+# reference_data.to_csv("../data/aes_reference_data.tsv", sep="\t", index=False)
