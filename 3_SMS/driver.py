@@ -7,12 +7,21 @@ from wmd import WMD
 import numpy as np
 import os
 
-REFERENCE_FILE = "../data/reference_data.tsv"
+# REFERENCE_FILE = "../data/reference_data.tsv"
+REFERENCE_FILE = "../data/aes_reference_data.tsv"
+# CANDIDATES_FILE = "../data/candidates_data.tsv"
+CANDIDATES_FILE = "../data/aes_candidates_data.tsv"
+# score_field = "Score1"
+score_field = "domain1_score"
+# essay_field = "EssayText"
+essay_field = "essay"
+# id_field = "Id"
+id_field = "essay_id"
 
 
 def calculate_similarity(candidate, next_id, emb):
     s = time.time()
-    can_doc = calculator.nlp(candidate["EssayText"])
+    can_doc = calculator.nlp(candidate[essay_field])
     similarities = []
     next_id, emb, can_id_list, can_weights = calculator.get_embeddings_ids_weights(
         can_doc, next_id, emb, method)
@@ -32,29 +41,30 @@ def calculate_similarity(candidate, next_id, emb):
     for id, dist in distances:
         similarity = np.exp(-dist)
         similarities.append({
-            "candidate_id": candidate["Id"],
+            "candidate_id": candidate[id_field],
             "reference_id": id,
             "similarity": similarity,
             "dist": dist,
-            "score": candidate["Score1"]
+            "score": candidate[score_field]
         })
     print("Time taken for candidate " +
-          str(candidate["Id"]) + " is " + str(time.time() - s))
+          str(candidate[id_field]) + " is " + str(time.time() - s))
 
     return similarities
 
 
 def get_all_ref_emb_weights():
     reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
+    print("Number of references:", len(reference_data))
     reference_data = reference_data.to_dict("records")
     processed_refs = {}
     next_id = 0
     emb = {}
     for item in reference_data:
-        doc = calculator.nlp(item["EssayText"])
+        doc = calculator.nlp(item[essay_field])
         next_id, emb, id_list, weights = calculator.get_embeddings_ids_weights(
             doc, next_id, emb, method)
-        processed_refs[item["Id"]] = {
+        processed_refs[item[id_field]] = {
             "id_list": id_list,
             "weights": weights
         }
@@ -63,11 +73,12 @@ def get_all_ref_emb_weights():
 
 
 st = time.time()
-CANDIDATES_FILE = sys.argv[1]
-model = sys.argv[2]
-method = sys.argv[3]
+
+model = sys.argv[1]
+method = sys.argv[2]
 parallel = False
 candidates_data = pd.read_csv(CANDIDATES_FILE, sep="\t")
+print("Number of candidates:", len(candidates_data))
 candidates_data = candidates_data.to_dict("records")
 
 calculator = EMDMetrics(model)
@@ -88,12 +99,12 @@ if os.path.isfile(results_file_name):
     max_id = final_results["candidate_id"].max()
     final_results = final_results.to_dict("records")
     for i in range(len(candidates_data)):
-        if candidates_data[i]["Id"] == max_id:
+        if candidates_data[i][id_field] == max_id:
             idx = i + 1
             break
     print("File already present.")
     print("Completed till ID:", max_id)
-    print("Continuing from ID:", candidates_data[idx]["Id"])
+    print("Continuing from ID:", candidates_data[idx][id_field])
 
 else:
     final_results = []
@@ -111,7 +122,7 @@ else:
             resp = calculate_similarity(candidate, next_id, emb)
             final_results.extend(resp)
         except:
-            print("ERROR WHILE PROCESSING:", candidate["Id"])
+            print("ERROR WHILE PROCESSING:", candidate[id_field])
 
         if idx % 100 == 0:
             final_results_df = pd.DataFrame(final_results)
