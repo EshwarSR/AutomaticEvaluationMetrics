@@ -10,14 +10,15 @@ plt.grid(True)
 plt.hist(odf['ROUGE-L Score'], bins=100)
 plt.title('Histogram of similarity scores', \
       fontdict={'fontname': 'DejaVu Sans', 'fontsize': 14})
-plt.xlabel('similarity score (scaled between 0 and 2)')
+plt.xlabel('similarity score (scaled between 0 and 1)')
 plt.ylabel('frequency')
 # plt.show()
 plt.savefig('score_range.png', dpi=300)
 
+max_score = 3
 plt.figure(figsize=(16, 9), dpi=100)
 plt.grid(True)
-plt.plot(odf['ROUGE-L Score'] * 2, odf['score'], '.g')
+plt.plot(odf['ROUGE-L Score'] * max_score, odf['score'], '.g')
 plt.title('Scatter plots of similarity scores vs human scores', \
       fontdict={'fontname': 'DejaVu Sans', 'fontsize': 14})
 plt.xlabel("human score")
@@ -26,7 +27,6 @@ plt.ylabel("similarity score")
 plt.savefig('scatter.png')
 
 plt.figure(figsize=(16, 9), dpi=100)
-max_score = 2
 another = []
 for i in range(max_score):
   another.append(odf.loc[(odf['score'] == i)]['ROUGE-L Score'] * 2)
@@ -34,7 +34,7 @@ for i in range(max_score):
 prop_cycle = plt.rcParams['axes.prop_cycle']
 colors = prop_cycle.by_key()['color']
 for i in range(max_score):
-	plt.hist(another[i], bins=50, color=colors[(i + 1) % 2], alpha=0.5, \
+	plt.hist(another[i], bins=50, color=colors[(i + 1) % max_score], alpha=0.5, \
 	         label='cands-humanscore:{0:1d}'.format(i))
 	plt.title('Histogram of scores correspoding to human scores', \
 	      fontdict={'fontname': 'DejaVu Sans', 'fontsize': 14})
