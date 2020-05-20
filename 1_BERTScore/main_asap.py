@@ -3,18 +3,18 @@ import numpy as np
 import os
 from bert_score import score
 
-filename = '../data/asap_sas.tsv'
-df = pd.read_csv(filename, delimiter='\t')
+filename = '../data/ASAP_AES/training_set_rel3.tsv'
+df = pd.read_csv(filename, delimiter='\t', encoding='ISO-8859–1')
 
-can1 = df.loc[(df['EssaySet'] == 3)]
+can1 = df.loc[(df['essay_set'] == 3) & (df['domain1_score'] != 3)]
 can1.reset_index(drop=True, inplace=True)
-cands = list(can1['EssayText'])
+cands = list(can1['essay'])
 print("Candidate Sentences: ", len(cands))
 # print(cands[0])
 
-ref1 = df.loc[(df['EssaySet'] == 3) & (df['Score1'] == 2)]
+ref1 = df.loc[(df['essay_set'] == 3) & (df['domain1_score'] == 3)]
 ref1.reset_index(drop=True, inplace=True)
-refs = list(ref1['EssayText'])
+refs = list(ref1['essay'])
 print("Reference Sentences: ", len(refs))
 # print(refs[0])
 
@@ -29,31 +29,30 @@ P, R, F1 = score(cands, refs, model_type=None, num_layers=None, verbose=True,
             idf=True, device=None, batch_size=64, nthreads=4, all_layers=False,
             lang="en", return_hash=False, rescale_with_baseline=True)
 
-print(len(F1))
+# print(len(F1))
 
 # print(can1.columns)
 odf = pd.DataFrame()
-odf['cand id'] = can1['Id']
+odf['cand id'] = can1['essay_id']
 odf['similarity score'] = pd.DataFrame(F1)
-odf['score'] = can1['Score1']
+odf['score'] = can1['domain1_score']
 odf.reset_index(drop=True, inplace=True)
 # print(odf.columns)
-
-odf.to_csv("outs.tsv", sep="\t", index=False, header=True)
 
 odf.to_csv("outs.tsv", sep="\t", index=False, header=True)
 
 import matplotlib.pyplot as plt
 plt.grid(True)
 plt.hist(F1, bins=20)
-plt.show()
+# plt.show()
 plt.savefig('histogram_all.png')
-plt.xlabel("Score1")
+plt.xlabel("domain1_score")
 plt.ylabel("Pred_Score")
+
 plt.grid(True)
 plt.plot(odf['score'], odf['similarity score'] * 2, '.g')
-plt.show()
-plt.savefig('res/scatter.png')
+# plt.show()
+plt.savefig('scatter.png')
 max_score = 2
 _, ax = plt.subplots(ncols=3, nrows=1, constrained_layout=True)
 for i in range(max_score + 1):
@@ -62,7 +61,7 @@ for i in range(max_score + 1):
   #   ax[i].set_xlim(-0.03, 2.03)
   ax[i].set_ylim(0, 250)
   ax[i].hist(daf['similarity score'] * 2, bins = 20)
-plt.show()
+# plt.show()
 plt.savefig('histograms_ind.png')
 from bert_score import plot_example
 cand = cands[0]

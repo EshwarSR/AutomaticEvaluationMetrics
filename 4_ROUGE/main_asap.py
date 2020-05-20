@@ -3,18 +3,18 @@ import numpy as np
 import os
 from rouge.rouge import Rouge
 
-filename = '../data/asap_sas.tsv'
-df = pd.read_csv(filename, delimiter='\t')
+filename = '../data/ASAP_AES/training_set_rel3.tsv'
+df = pd.read_csv(filename, delimiter='\t', encoding='ISO-8859–1')
 
-can1 = df.loc[(df['EssaySet'] == 3) & (df['Score1'] != 2)]
+can1 = df.loc[(df['essay_set'] == 3) & (df['domain1_score'] != 3)]
 can1.reset_index(drop=True, inplace=True)
-cands = list(can1['EssayText'])
+cands = list(can1['essay'])
 print("Candidate Sentences: ", len(cands))
 # print(cands[0])
 
-ref1 = df.loc[(df['EssaySet'] == 3) & (df['Score1'] == 2)]
+ref1 = df.loc[(df['essay_set'] == 3) & (df['domain1_score'] == 3)]
 ref1.reset_index(drop=True, inplace=True)
-refs = list(ref1['EssayText'])
+refs = list(ref1['essay'])
 print("Reference Sentences: ", len(refs))
 # print(refs[0])
 
@@ -38,11 +38,11 @@ for cand in cands:
 
 # print(can1.columns)
 odf = pd.DataFrame()
-odf['cand id'] = can1['Id']
+odf['cand id'] = can1['essay_id']
 odf['ROUGE-1 Score'] = pd.DataFrame(R1)
 odf['ROUGE-2 Score'] = pd.DataFrame(R2)
 odf['ROUGE-L Score'] = pd.DataFrame(R3)
-odf['score'] = can1['Score1']
+odf['score'] = can1['domain1_score']
 odf.reset_index(drop=True, inplace=True)
 # print(odf.columns)
 
