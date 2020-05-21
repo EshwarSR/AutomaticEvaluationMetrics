@@ -223,6 +223,7 @@ def calc_smd(input_f, output_f=""):
         except:
             print(doc, text)
         sim = math.exp(-dist)  # switch to similarity
+        print("Similarity", sim)
         results_list.append(sim)
         if doc_id == int((len(token_doc_list) / 10.) * count):
             print(str(count * 10) + "% done with calculations")

@@ -98,22 +98,22 @@ results_file_name = results_file_name + "_" + model + "_" + method + ".tsv"
 # results_file_name = "../results/asap_aes_results/SMS_against_one_ref/" + results_file_name
 
 
-if os.path.isfile(results_file_name):
-    # final_results = pd.read_csv(results_file_name, sep="\t")
-    # max_id = final_results["candidate_id"].max()
-    # final_results = final_results.to_dict("records")
-    # for i in range(len(candidates_data)):
-    #     if candidates_data[i][id_field] == max_id:
-    #         idx = i + 1
-    #         break
-    # print("File already present.")
-    # print("Completed till ID:", max_id)
-    # print("Continuing from ID:", candidates_data[idx][id_field])
-    pass
+# if os.path.isfile(results_file_name):
+#     # final_results = pd.read_csv(results_file_name, sep="\t")
+#     # max_id = final_results["candidate_id"].max()
+#     # final_results = final_results.to_dict("records")
+#     # for i in range(len(candidates_data)):
+#     #     if candidates_data[i][id_field] == max_id:
+#     #         idx = i + 1
+#     #         break
+#     # print("File already present.")
+#     # print("Completed till ID:", max_id)
+#     # print("Continuing from ID:", candidates_data[idx][id_field])
+#     pass
 
-else:
-    final_results = []
-    idx = 0
+# else:
+final_results = []
+idx = 0
 
 if parallel == True:
     with ProcessPoolExecutor(max_workers=2) as executor:
@@ -137,5 +137,6 @@ else:
 print("Done with similarity")
 final_results_df = pd.DataFrame(final_results)
 print("Created Dataframe")
+print(final_results_df)
 final_results_df.to_csv(results_file_name, sep="\t", index=False)
 print("Finished writing file")

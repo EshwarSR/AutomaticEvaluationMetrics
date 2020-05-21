@@ -57,8 +57,8 @@ class EMDMetrics:
                         words.append(word.text)
                 if len(sent_list) > 0:
                     doc_list.append(sent_list)
-            print("Words")
-            print(words)
+            # print("Words")
+            # print(words)
 
         elif self.model == "elmo":
             # TODO: I am considering improper sentence to get embeddings after removing the stop words. This is wrong.
@@ -165,4 +165,5 @@ class EMDMetrics:
         dist = calc.nearest_neighbors("reference", k=1, early_stop=1)[
             0][1]
         similarity = np.exp(-dist)
+        print("Similarity", similarity)
         return similarity
