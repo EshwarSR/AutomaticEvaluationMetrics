@@ -1,5 +1,3 @@
-# run this as  python driver.py glove sms
-
 import pandas as pd
 import time
 from emd_metrics import EMDMetrics
@@ -12,7 +10,7 @@ import os
 # REFERENCE_FILE = "../data/reference_data.tsv"
 REFERENCE_FILE = "../data/aes_reference_data.tsv"
 # CANDIDATES_FILE = "../data/candidates_data.tsv"
-CANDIDATES_FILE = "test2.tsv"  # "../data/aes_candidates_data.tsv"
+CANDIDATES_FILE = "../data/aes_candidates_data.tsv"
 # score_field = "Score1"
 score_field = "domain1_score"
 # essay_field = "EssayText"
@@ -37,8 +35,8 @@ def calculate_similarity(candidate, next_id, emb):
         nbow[id] = (id, ref_id_list, ref_weights)
 
     calc = WMD(emb, nbow, vocabulary_min=1)
-    print("NBOW")
-    print(nbow)
+    # print("NBOW")
+    # print(nbow)
     distances = calc.nearest_neighbors(
         "hypothesis", k=len(processed_refs), early_stop=1)
 
@@ -51,15 +49,15 @@ def calculate_similarity(candidate, next_id, emb):
             "dist": dist,
             "score": candidate[score_field]
         })
-    # print("Time taken for candidate " +
-    #       str(candidate[id_field]) + " is " + str(time.time() - s))
+    print("Time taken for candidate " +
+          str(candidate[id_field]) + " is " + str(time.time() - s))
 
     return similarities
 
 
 def get_all_ref_emb_weights():
     reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
-    # print("Number of references:", len(reference_data))
+    print("Number of references:", len(reference_data))
     reference_data = reference_data.to_dict("records")
     processed_refs = {}
     next_id = 0
@@ -82,22 +80,22 @@ model = sys.argv[1]
 method = sys.argv[2]
 parallel = False
 candidates_data = pd.read_csv(CANDIDATES_FILE, sep="\t")
-# print("Number of candidates:", len(candidates_data))
+print("Number of candidates:", len(candidates_data))
 candidates_data = candidates_data.to_dict("records")
 
 calculator = EMDMetrics(model)
-# print("Loaded model", time.time() - st)
+print("Loaded model", time.time() - st)
 
 st = time.time()
 processed_refs, next_id, emb = get_all_ref_emb_weights()
-# print("Done preprocessing references", time.time() - st)
+print("Done preprocessing references", time.time() - st)
 
 
 results_file_name = CANDIDATES_FILE.rsplit(
     "/", 1)[1] if "/" in CANDIDATES_FILE else CANDIDATES_FILE
 results_file_name = results_file_name.split(".")[0]
 results_file_name = results_file_name + "_" + model + "_" + method + ".tsv"
-# results_file_name = "../results/asap_aes_results/SMS_against_one_ref/" + results_file_name
+results_file_name = "../results/asap_aes_results/SMS_against_one_ref_2/" + results_file_name
 
 
 # if os.path.isfile(results_file_name):
@@ -131,9 +129,9 @@ else:
         except:
             print("ERROR WHILE PROCESSING:", candidate[id_field])
 
-        # if idx % 100 == 0:
-        #     final_results_df = pd.DataFrame(final_results)
-        #     final_results_df.to_csv(results_file_name, sep="\t", index=False)
+        if idx % 100 == 0:
+            final_results_df = pd.DataFrame(final_results)
+            final_results_df.to_csv(results_file_name, sep="\t", index=False)
         idx += 1
 
 print("Done with similarity")
