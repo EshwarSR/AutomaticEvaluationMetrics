@@ -1,3 +1,5 @@
+# run this as  python driver.py glove sms
+
 import pandas as pd
 import time
 from emd_metrics import EMDMetrics
@@ -10,7 +12,7 @@ import os
 # REFERENCE_FILE = "../data/reference_data.tsv"
 REFERENCE_FILE = "../data/aes_reference_data.tsv"
 # CANDIDATES_FILE = "../data/candidates_data.tsv"
-CANDIDATES_FILE = "../data/aes_candidates_data.tsv"
+CANDIDATES_FILE = "test2.tsv"  # "../data/aes_candidates_data.tsv"
 # score_field = "Score1"
 score_field = "domain1_score"
 # essay_field = "EssayText"
@@ -89,22 +91,25 @@ processed_refs, next_id, emb = get_all_ref_emb_weights()
 print("Done preprocessing references", time.time() - st)
 
 
-results_file_name = CANDIDATES_FILE.rsplit("/", 1)[1]
+results_file_name = CANDIDATES_FILE.rsplit(
+    "/", 1)[1] if "/" in CANDIDATES_FILE else CANDIDATES_FILE
 results_file_name = results_file_name.split(".")[0]
 results_file_name = results_file_name + "_" + model + "_" + method + ".tsv"
-results_file_name = "../results/asap_aes_results/SMS_against_one_ref/" + results_file_name
+# results_file_name = "../results/asap_aes_results/SMS_against_one_ref/" + results_file_name
+
 
 if os.path.isfile(results_file_name):
-    final_results = pd.read_csv(results_file_name, sep="\t")
-    max_id = final_results["candidate_id"].max()
-    final_results = final_results.to_dict("records")
-    for i in range(len(candidates_data)):
-        if candidates_data[i][id_field] == max_id:
-            idx = i + 1
-            break
-    print("File already present.")
-    print("Completed till ID:", max_id)
-    print("Continuing from ID:", candidates_data[idx][id_field])
+    # final_results = pd.read_csv(results_file_name, sep="\t")
+    # max_id = final_results["candidate_id"].max()
+    # final_results = final_results.to_dict("records")
+    # for i in range(len(candidates_data)):
+    #     if candidates_data[i][id_field] == max_id:
+    #         idx = i + 1
+    #         break
+    # print("File already present.")
+    # print("Completed till ID:", max_id)
+    # print("Continuing from ID:", candidates_data[idx][id_field])
+    pass
 
 else:
     final_results = []
@@ -124,9 +129,9 @@ else:
         except:
             print("ERROR WHILE PROCESSING:", candidate[id_field])
 
-        if idx % 100 == 0:
-            final_results_df = pd.DataFrame(final_results)
-            final_results_df.to_csv(results_file_name, sep="\t", index=False)
+        # if idx % 100 == 0:
+        #     final_results_df = pd.DataFrame(final_results)
+        #     final_results_df.to_csv(results_file_name, sep="\t", index=False)
         idx += 1
 
 print("Done with similarity")

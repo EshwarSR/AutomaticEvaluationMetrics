@@ -33,6 +33,8 @@ class EMDMetrics:
         doc_list = []
         weights = []
 
+        words = []
+
         if self.model == "glove":
             # sents_list = [sent for sent in nltk.sent_tokenize(
             #     spacy_doc.text)]  # Trying to replicate authors score
@@ -52,10 +54,15 @@ class EMDMetrics:
                         sent_list.append(next_id)
                         emb[next_id] = self.nlp.vocab.get_vector(word.text)
                         next_id += 1
+                        words.append(word.text)
                 if len(sent_list) > 0:
                     doc_list.append(sent_list)
+            print("Words")
+            print(words)
 
         elif self.model == "elmo":
+            # TODO: I am considering improper sentence to get embeddings after removing the stop words. This is wrong.
+            # Changes needed in sent_words_list and word_vectors
             for sent in spacy_doc.sents:
                 sent_words_list = []
                 sent_ids_list = []

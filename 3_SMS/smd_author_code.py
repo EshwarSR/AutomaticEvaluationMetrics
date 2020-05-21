@@ -1,5 +1,8 @@
 # Framework for Sentence Mover's Distance
 
+# Run it as python smd_author_code.py test.tsv glove sms
+
+
 import sys
 import nltk
 
