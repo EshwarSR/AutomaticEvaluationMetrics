@@ -5,18 +5,18 @@ import numpy as np
 import pandas as pd
 import math
 
-odf = pd.read_csv('outs.tsv', delimiter='\t')
+odf = pd.read_csv('BERTScore_noidf_no_rescale_3_aes.tsv', delimiter='\t')
 
 max_score = 4
 another = []
 for i in range(max_score):
-	another.append(odf.loc[(odf['score'] == i)]['ROUGE-1 Score'] * (max_score - 1))
+	another.append(odf.loc[(odf['score'] == i)]['R score'] * (max_score - 1))
 maxxie = max([max(x) for x in another])
 minnie = min([min(x) for x in another])
 
 rn = maxxie - minnie
 
-wd = 0.01
+wd = 0.003
 bins_needed = math.ceil(rn / wd)
 print(bins_needed)
 

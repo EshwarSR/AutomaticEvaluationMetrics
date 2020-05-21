@@ -4,7 +4,7 @@ import pandas as pd
 
 results_file = sys.argv[1]
 results = pd.read_csv(results_file, sep="\t")
-similarity = results['similarity score'].tolist()
+similarity = results['R score'].tolist()
 score = results["score"].tolist()
 
 

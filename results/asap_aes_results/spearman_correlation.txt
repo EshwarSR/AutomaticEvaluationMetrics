@@ -1,5 +1,0 @@
-Spearman Rank Correlation
-BERTScore : 0.128 (maybe)
-ROUGE-1		: 0.391
-ROUGE-2		: 0.077
-ROUGE-L		: 0.214

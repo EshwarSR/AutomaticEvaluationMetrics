@@ -4,7 +4,7 @@ import pandas as pd
 
 results_file = sys.argv[1]
 results = pd.read_csv(results_file, sep="\t")
-similarity = results['ROUGE-L Score'].tolist()
+similarity = results['ROUGE-2 Score'].tolist()
 score = results["score"].tolist()
 
 scorr = spearmanr(similarity, score)

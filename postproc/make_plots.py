@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-dire = '../results/all_threes/'
+dire = '../results/asap_aes_results/'
 fn = os.listdir(dire)
 for an in fn:
 	ex = an[:-4]
