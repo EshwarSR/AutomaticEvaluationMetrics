@@ -35,14 +35,15 @@ class EMDMetrics:
 
         words = []
 
+        sents_list = [sent for sent in nltk.sent_tokenize(
+            spacy_doc.text)]
+
         if self.model == "glove":
-            # sents_list = [sent for sent in nltk.sent_tokenize(
-            #     spacy_doc.text)]  # Trying to replicate authors score
-            for sent in spacy_doc.sents:
-                # for sent in sents_list:  # Trying to replicate authors score
+            # for sent in spacy_doc.sents:
+            for sent in sents_list:  # Trying to replicate authors score
                 sent_list = []
-                for word in sent:
-                    # for word in self.nlp(sent):  # Trying to replicate authors score
+                # for word in sent:
+                for word in self.nlp(sent):  # Trying to replicate authors score
                     include = False
                     if self.ignore_stopwords:
                         if word.text.isalpha() and word.text.lower() not in stop_words:
@@ -61,34 +62,37 @@ class EMDMetrics:
             # print(words)
 
         elif self.model == "elmo":
-            # TODO: I am considering improper sentence to get embeddings after removing the stop words. This is wrong.
-            # Changes needed in sent_words_list and word_vectors
-            for sent in spacy_doc.sents:
+            for sent in sents_list:
                 sent_words_list = []
                 sent_ids_list = []
-                for word in sent:
+                mask = []
+                for word in self.nlp(sent):
                     include = False
                     if self.ignore_stopwords:
                         if word.text.isalpha() and word.text.lower() not in stop_words:
                             include = True
                     else:
                         include = True
+                    sent_words_list.append(word.text)
                     if include:
-                        sent_words_list.append(word.text)
+                        mask.append(1)  # include the embedding
+                    else:
+                        mask.append(0)  # exclude the embedding
 
                 if len(sent_words_list) > 0:
                     word_vectors = self.MODEL.embed_sentence(sent_words_list)
                     word_vectors = np.average(word_vectors, axis=0)
-                    for word_idx in range(len(sent_words_list)):
-                        sent_ids_list.append(next_id)
-                        emb[next_id] = word_vectors[word_idx]
-                        next_id += 1
+                    for word_idx in range(len(word_vectors)):
+                        if mask[word_idx]:
+                            sent_ids_list.append(next_id)
+                            emb[next_id] = word_vectors[word_idx]
+                            next_id += 1
                     doc_list.append(sent_ids_list)
 
         elif self.model == "bert":
             sents = []
-            for sent in spacy_doc.sents:
-                sents.append(sent.text)
+            for sent in sents_list:
+                sents.append(sent)
             bert_resp = self.MODEL(sents)
             for words_list, word_vectors in bert_resp:
                 sent_ids_list = []
@@ -119,8 +123,12 @@ class EMDMetrics:
                 weights = []
             elif method == "s+wms":
                 ids_list = [item for sublist in doc_list for item in sublist]
-                weights = [1/(len(ids_list))] * len(ids_list)
+                # weights = [1/(len(ids_list))] * len(ids_list)
+                weights = []
+                for id in ids_list:
+                    weights.append(ids_list.count(id))
 
+            total_toks = 0
             for sent in doc_list:
                 word_embs = []
                 for word_id in sent:
@@ -130,12 +138,15 @@ class EMDMetrics:
                 emb[next_id] = sent_emb
                 next_id += 1
 
-                weights.append(len(sent) / len(spacy_doc))
+                weights.append(len(sent))
+                total_toks += len(sent)
 
-            weights = np.array(weights, dtype=np.float32)
+            weights = np.array(weights, dtype=np.float32)  # / total_toks
 
-            if method == "s+wms":
-                weights = weights / 2
+            if method == "sms" or method == "s+wms":
+                weights = weights / (total_toks)
+                if method == "s+wms":
+                    weights = weights / 2
 
         return next_id, emb, ids_list, weights
 

@@ -216,6 +216,8 @@ def calc_smd(input_f, output_f=""):
         # format doc as expected: {id: (id, ref_id_list, ref_d)}
         doc_dict = {"0": ("ref", ref_id_list, ref_d),
                     "1": ("hyp", hyp_id_list, hyp_d)}
+        print("Doc DICT")
+        print(doc_dict)
         calc = WMD(rep_map, doc_dict, vocabulary_min=1)
         try:
             dist = calc.nearest_neighbors(str(0), k=1, early_stop=1)[
