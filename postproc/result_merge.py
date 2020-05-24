@@ -9,7 +9,7 @@ edf = pd.read_csv(br + 'scores_almost.tsv', sep='\t')
 bz = bdf.columns.to_list()
 ez = edf.columns.to_list()
 
-assert bz[:2] == ez[:2], "First 2 elements must be same in both lists"
+assert bz[:3] == ez[:3], "First 2 elements must be same in both lists"
 assert bz[-1] == ez[-1], "Last element must be same in both lists"
 
 fin = bz[:2]

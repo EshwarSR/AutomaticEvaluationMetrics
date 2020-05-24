@@ -18,23 +18,14 @@ ref1.reset_index(drop=True, inplace=True)
 ref = ref1['Reference'][0]
 
 rouge = Rouge()
-R1 = []
-R2 = []
-R3 = []
-for cand in cands:
-	scores = rouge.get_scores(cand, ref)
-	R1 += [one['rouge-1']['f'] for one in scores]
-	R2 += [one['rouge-2']['f'] for one in scores]
-	R3 += [one['rouge-l']['f'] for one in scores]
+sc = []
+for cand, canid, hscore in zip(cands, can1['essay_id'], can1['domain1_score']):
+	scores = rouge.get_scores(cand, ref)[0]
+	sc.append([ canid, scores['rouge-1']['f'], scores['rouge-1']['p'], scores['rouge-1']['r'], \
+				scores['rouge-2']['f'], scores['rouge-2']['p'], scores['rouge-2']['r'], \
+				scores['rouge-l']['f'], scores['rouge-l']['p'], scores['rouge-l']['r'], hscore ])
 
 # print(can1.columns)
-odf = pd.DataFrame()
-odf['cand id'] = can1['essay_id']
-odf['ROUGE-1 Score'] = pd.DataFrame(R1)
-odf['ROUGE-2 Score'] = pd.DataFrame(R2)
-odf['ROUGE-L Score'] = pd.DataFrame(R3)
-odf['score'] = can1['domain1_score']
+odf = pd.DataFrame(sc, columns=['cand id', 'R1f', 'R1p', 'R1r', 'R2f', 'R2p', 'R2r', 'RLf', 'RLp', 'RLr', 'score'])
 odf.reset_index(drop=True, inplace=True)
-# print(odf.columns)
-
 odf.to_csv("outs.tsv", sep="\t", index=False, header=True)
