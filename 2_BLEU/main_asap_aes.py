@@ -16,10 +16,6 @@ n_gram = 4
 cand_id, candidate_corpus, human_scores = cand_data(cand_df)
 reference_corpus = ref_data(ref_df)
 
-# print(candidate_corpus[0:4])
-
-# print(BLEU(reference_corpus, reference_corpus[0], 4))
-
 bleu_scores = []
 
 for i in range(len(candidate_corpus)):
@@ -27,9 +23,6 @@ for i in range(len(candidate_corpus)):
     # print(bleu)
     bleu_scores.append(bleu)
 print(max(bleu_scores))
-
-# # for i in range(len(bleu)):
-# #     print(bleu[i])
 
 filename = "../results/asap_aes_results/BLEU_scores_aes.txt"
 with open(filename, 'w') as f:
