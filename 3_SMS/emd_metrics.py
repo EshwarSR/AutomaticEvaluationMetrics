@@ -60,6 +60,7 @@ class EMDMetrics:
                     doc_list.append(sent_list)
 
         elif self.model == "elmo":
+            # print("sents_list", sents_list)
             for sent in sents_list:
                 sent_words_list = []
                 sent_ids_list = []
@@ -77,7 +78,7 @@ class EMDMetrics:
                     else:
                         mask.append(0)  # exclude the embedding
 
-                if len(sent_words_list) > 0:
+                if mask.count(1) > 0:
                     word_vectors = self.MODEL.embed_sentence(sent_words_list)
                     word_vectors = np.average(word_vectors, axis=0)
                     for word_idx in range(len(word_vectors)):
@@ -86,6 +87,7 @@ class EMDMetrics:
                             emb[next_id] = word_vectors[word_idx]
                             next_id += 1
                     doc_list.append(sent_ids_list)
+            # print("doc_list", doc_list)
 
         elif self.model == "bert":
             sents = []
