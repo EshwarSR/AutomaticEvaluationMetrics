@@ -95,7 +95,7 @@ results_file_name = CANDIDATES_FILE.rsplit(
     "/", 1)[1] if "/" in CANDIDATES_FILE else CANDIDATES_FILE
 results_file_name = results_file_name.split(".")[0]
 results_file_name = results_file_name + "_" + model + "_" + method + ".tsv"
-results_file_name = "../results/asap_aes_results/SMS_against_one_ref_2/" + results_file_name
+results_file_name = "../results/Related_to_Asap_aes/Eshwarscode/" + results_file_name
 
 
 # if os.path.isfile(results_file_name):
