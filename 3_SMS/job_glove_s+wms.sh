@@ -10,5 +10,5 @@
 #source /home/eshwarsr/IISc-ML-Project/virtual_env/bin/activate
 
 conda activate base
-python -u driver.py glove s+wms > logs/redirect_glove_aes_s+wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
+python -u driver_cnn.py glove s+wms > logs/redirect_glove_cnn_s+wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
 echo "Done"

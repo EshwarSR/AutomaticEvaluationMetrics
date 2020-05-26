@@ -10,5 +10,5 @@
 #source /home/eshwarsr/IISc-ML-Project/virtual_env/bin/activate
 
 conda activate base
-python -u driver.py bert s+wms > logs/redirect_bert_aes_s+wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
+python -u driver_cnn.py bert s+wms > logs/redirect_bert_cnn_s+wms_`date +%d_%m_%Y_%H_%M_%S`.log 2>&1
 echo "Done"

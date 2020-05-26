@@ -167,11 +167,14 @@ class EMDMetrics:
 
         return emb, nbow
 
-    # Driver function
-    def get_similarity(self, candidate, reference, method):
+    # Driver functions
+    def get_similarity_dist(self, candidate, reference, method):
         emb, nbow = self.get_emb_nbow(candidate, reference, method)
         calc = WMD(emb, nbow, vocabulary_min=1)
         dist = calc.nearest_neighbors("reference", k=1, early_stop=1)[
             0][1]
         similarity = np.exp(-dist)
-        return similarity
+        return similarity, dist
+
+    def get_similarity(self, candidate, reference, method):
+        return self.get_similarity_dist(candidate, reference, method)[0]
