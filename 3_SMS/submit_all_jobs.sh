@@ -1,5 +1,3 @@
-#!/bin/bash
-
 sbatch job_bert_sms.sh
 sbatch job_bert_wms.sh
 sbatch job_elmo_s+wms.sh
