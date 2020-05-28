@@ -1,7 +1,0 @@
-Score	Spearman Rank Correlation	Spearman p-value	Pearson Rank Correlation	Pearson p-value	Kendall Rank Correlation	Kendall p-value
-data_as_per_author_elmo_s+wms	0.531728902	1.42E-126	0.526328979	1.34E-123	0.422728458	4.57E-116
-data_as_per_author_elmo_sms	0.384288015	7.55E-62	0.385576013	2.76E-62	0.300924978	9.52E-60
-data_as_per_author_elmo_wms	0.561640714	4.55E-144	0.547782379	9.64E-136	0.448632649	1.78E-130
-data_as_per_author_glove_s+wms	0.573040569	3.22E-151	0.569943902	3.01E-149	0.457879835	7.91E-136
-data_as_per_author_glove_sms	0.40212512	4.43E-68	0.413459901	3.04E-72	0.315615924	1.53E-65
-data_as_per_author_glove_wms	0.574227499	5.59E-152	0.559611796	7.98E-143	0.458521304	3.34E-136

@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 import os
 
-dire = '../results/asap_aes_final/asap_aes_scores_all_1088.tsv'
+dire = '../results/CNN_DailyMail_results/cnn_all.tsv'
 odf = pd.read_csv(dire, delimiter='\t')
 
 metrics = odf.columns
@@ -12,6 +12,7 @@ score = odf[odf.columns[-1]].tolist()
 
 out = []
 for one in metrics:
+	# print(one + ' started')
 	similarity = odf[one].tolist()
 	score = score[:len(similarity)]
 	scorr = spearmanr(similarity, score)
@@ -25,4 +26,4 @@ fdf = pd.DataFrame(out, columns=['Score', 'Spearman Rank Correlation', 'Spearman
 																 'Kendall Rank Correlation', 'Kendall p-value'])
 
 fdf.reset_index(drop=True, inplace=True)
-fdf.to_csv("corr_new_smses.tsv", sep="\t", index=False, header=True)
+fdf.to_csv("corr_all.tsv", sep="\t", index=False, header=True)
