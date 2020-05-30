@@ -8,9 +8,9 @@ import numpy as np
 import os
 
 # REFERENCE_FILE = "../data/reference_data.tsv"
-REFERENCE_FILE = "../data/aes_reference_data.tsv"
+REFERENCE_FILE = "../data/ASAP_AES/aes_reference_data.tsv"
 # CANDIDATES_FILE = "../data/candidates_data.tsv"
-CANDIDATES_FILE = "../data/aes_candidates_data.tsv"
+CANDIDATES_FILE = "../data/ASAP_AES/aes_candidates_data.tsv"
 # score_field = "Score1"
 score_field = "domain1_score"
 # essay_field = "EssayText"
