@@ -127,8 +127,10 @@ class EMDMetrics:
                 sent_words_list = []
                 sent_ids_list = []
                 mask = []
-                token_ids = self.tokenizer.encode(sent)
-                tokens = self.tokenizer.decode(token_ids)
+                token_ids_temp = self.tokenizer.encode(sent)
+                token_ids = torch.tensor([token_ids_temp])
+                tokens = [self.tokenizer.decode(
+                    i).strip() for i in token_ids_temp]
 
                 for word in tokens:
                     include = False
@@ -137,16 +139,21 @@ class EMDMetrics:
                             include = True
                     else:
                         include = True
-                    sent_words_list.append(word.text)
+                    sent_words_list.append(word)
                     if include:
                         mask.append(1)  # include the embedding
                     else:
                         mask.append(0)  # exclude the embedding
 
+                # print("Sent:", sent)
+                # print("tokens:", tokens)
+                # print("mask:", mask)
+
                 if mask.count(1) > 0:
                     with torch.no_grad():
-                        word_vectors = self.MODEL(tokens)[0]
-                    word_vectors = np.average(word_vectors, axis=0)
+                        word_vectors = self.MODEL(
+                            token_ids)[0][0].detach().numpy()
+                    # word_vectors = np.average(word_vectors, axis=0)
                     for word_idx in range(len(word_vectors)):
                         if mask[word_idx]:
                             sent_ids_list.append(next_id)
@@ -207,7 +214,7 @@ class EMDMetrics:
 
         nbow = {
             "reference": ("reference", ref_id_list, ref_weights),
-            "hypothesis": ("reference", can_id_list, can_weights)
+            "hypothesis": ("hypothesis", can_id_list, can_weights)
         }
 
         return emb, nbow
@@ -215,9 +222,12 @@ class EMDMetrics:
     # Driver functions
     def get_similarity_dist(self, candidate, reference, method):
         emb, nbow = self.get_emb_nbow(candidate, reference, method)
+        # print("emb:", emb.keys())
+        # print("nbow:", nbow)
         calc = WMD(emb, nbow, vocabulary_min=1)
-        dist = calc.nearest_neighbors("reference", k=1, early_stop=1)[
-            0][1]
+        dist = calc.nearest_neighbors("reference", k=1, early_stop=1)
+        # print("Dist:", dist)
+        dist = dist[0][1]
         similarity = np.exp(-dist)
         return similarity, dist
 
