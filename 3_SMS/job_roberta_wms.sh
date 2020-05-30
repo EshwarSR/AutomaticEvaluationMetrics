@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --job-name=bert_wms # Job name
+#SBATCH --job-name=rb_wms # Job name
 #SBATCH --ntasks=64 
 #SBATCH --output=logs/batch_roberta_wms_%j.out # Standard output and error log
 #SBATCH --partition=cl2_48h-1G
