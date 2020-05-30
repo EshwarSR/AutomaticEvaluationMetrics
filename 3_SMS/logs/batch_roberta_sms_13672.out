@@ -17,4 +17,4 @@ See 'conda init --help' for more information and options.
 IMPORTANT: You may need to close and restart your shell after running 'conda init'.
 
 
-Done
+slurmstepd: error: *** JOB 13672 ON cl-gpusrv2 CANCELLED AT 2020-05-30T17:51:53 ***
