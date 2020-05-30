@@ -76,7 +76,7 @@ def process_dataset(dataset, results_file_name):
         ref = sample["reference"]
         # print("Reference:", ref)
         # print("Candidate:",cand)
-        sim, dist = calculator.get_similarity_dist(cand, ref, METHOD)
+        sim, dist = get_similarity_dist(cand, ref)
         sample["similarity"] = sim
         sample["distance"] = dist
         final_results.append(sample)
