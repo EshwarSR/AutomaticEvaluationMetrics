@@ -71,17 +71,17 @@ def process_dataset(dataset, results_file_name):
     final_results = []
     for idx, sample in enumerate(dataset):
         s = time.time()
-        try:
-            cand = sample["candidate"]
-            ref = sample["reference"]
-            # print("Reference:", ref)
-            # print("Candidate:",cand)
-            sim, dist = calculator.get_similarity_dist(cand, ref, METHOD)
-            sample["similarity"] = sim
-            sample["distance"] = dist
-            final_results.append(sample)
-        except:
-            print("ERROR WHILE PROCESSING:", sample)
+        # try:
+        cand = sample["candidate"]
+        ref = sample["reference"]
+        # print("Reference:", ref)
+        # print("Candidate:",cand)
+        sim, dist = get_similarity_dist(cand, ref)
+        sample["similarity"] = sim
+        sample["distance"] = dist
+        final_results.append(sample)
+        # except:
+        #     print("ERROR WHILE PROCESSING:", sample)
 
         print("Time taken for candidate", idx, "is", time.time() - s)
 
