@@ -9,9 +9,13 @@ from bert_embedding import BertEmbedding
 import time
 import nltk
 from nltk.corpus import stopwords
-
+from transformers import AutoTokenizer, AutoModel
+import torch
 
 stop_words = set(stopwords.words('english'))
+stop_words.add("<s>")
+stop_words.add("</s>")
+stop_words.add("<pad>")
 
 
 class EMDMetrics:
@@ -21,6 +25,13 @@ class EMDMetrics:
             self.MODEL = ElmoEmbedder()
         elif self.model == "bert":
             self.MODEL = BertEmbedding()
+        elif self.model == 'roberta-large':
+            self.num_layers = 17
+            self.tokenizer = AutoTokenizer.from_pretrained(self.model)
+            self.MODEL = AutoModel.from_pretrained(self.model)
+            self.MODEL.encoder.layer = torch.nn.ModuleList(
+                [layer for layer in self.MODEL.encoder.layer[:self.num_layers]])
+            self.MODEL.eval()
         self.nlp = spacy.load("en_core_web_md")
         self.ignore_stopwords = ignore_stopwords
 
@@ -109,6 +120,38 @@ class EMDMetrics:
                         emb[next_id] = word_vectors[word_idx]
                         next_id += 1
                 if len(sent_ids_list) > 0:
+                    doc_list.append(sent_ids_list)
+
+        elif self.model == "roberta-large":
+            for sent in sents_list:
+                sent_words_list = []
+                sent_ids_list = []
+                mask = []
+                token_ids = self.tokenizer.encode(sent)
+                tokens = self.tokenizer.decode(token_ids)
+
+                for word in tokens:
+                    include = False
+                    if self.ignore_stopwords:
+                        if word.isalpha() and word.lower() not in stop_words:
+                            include = True
+                    else:
+                        include = True
+                    sent_words_list.append(word.text)
+                    if include:
+                        mask.append(1)  # include the embedding
+                    else:
+                        mask.append(0)  # exclude the embedding
+
+                if mask.count(1) > 0:
+                    with torch.no_grad():
+                        word_vectors = self.MODEL(tokens)[0]
+                    word_vectors = np.average(word_vectors, axis=0)
+                    for word_idx in range(len(word_vectors)):
+                        if mask[word_idx]:
+                            sent_ids_list.append(next_id)
+                            emb[next_id] = word_vectors[word_idx]
+                            next_id += 1
                     doc_list.append(sent_ids_list)
 
         if method == "wms":
