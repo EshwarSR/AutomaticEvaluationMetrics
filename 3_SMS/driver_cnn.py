@@ -31,6 +31,8 @@ for idx, sample in enumerate(dataset):
     try:
         cand = sample["candidate"]
         ref = sample["reference"]
+        # print("Reference:", ref)
+        # print("Candidate:",cand)
         sim, dist = calculator.get_similarity_dist(cand, ref, METHOD)
         sample["similarity"] = sim
         sample["distance"] = dist
