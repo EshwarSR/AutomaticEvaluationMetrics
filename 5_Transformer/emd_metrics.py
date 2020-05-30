@@ -1,99 +1,46 @@
-"""Metrics based on Earth Mover's Distance"""
-
-import spacy
 from collections import Counter
 from wmd import WMD
 import numpy as np
-from allennlp.commands.elmo import ElmoEmbedder
-from bert_embedding import BertEmbedding
 import time
-import nltk
-from nltk.corpus import stopwords
-from transformers import RobertaTokenizer, RobertaModel, RobertaConfig
+from transformers import AutoModel, AutoTokenizer
 import torch
 
-stop_words = set(stopwords.words('english'))
-
-
 class EMDMetrics:
-	def __init__(self, model, ignore_stopwords=True):
+	def __init__(self, model = 'roberta-large', layers = 17, ignore_stopwords=True):
 		self.model = model
-		if self.model == "elmo":
-			self.MODEL = ElmoEmbedder()
-		elif self.model == "bert":
-			self.MODEL = BertEmbedding()
-		elif self.MODEL == "roberta-large":
+		self.num_layers = layers
 
-			self.MODEL = BertEmbedding()
-		self.nlp = spacy.load("en_core_web_md")
-		self.ignore_stopwords = ignore_stopwords
+	def sent_encode(self, one_sent):
+		one_sent = one_sent.strip()
+		return torch.tensor([self.tok.encode(one_sent)])[0]
+
+	def get_roberta_emb(self, tokenized_sent):
+		model.eval()
+		with torch.no_grad():
+			out = self.MODEL(tokenized_sent)
+			emb = out[0]
+			# emb = out[-1]
+		return emb
 
 	def get_sent_embedding(self, word_emb_list):
 		word_emb_array = np.array(word_emb_list)
 		sent_emb = list(np.mean(word_emb_array, axis=0))
 		return sent_emb
 
-	def get_embeddings_ids_weights(self, spacy_doc, next_id, emb, method):
+	def get_embeddings_ids_weights(self, doc, next_id, emb, method):
 		doc_list = []
-		weights = []
-		words = []
-		sents_list = [sent for sent in nltk.sent_tokenize(spacy_doc.text)]
+		weights  = []
+		words    = []
 
-		if self.model == "glove":
-			# for sent in spacy_doc.sents:
-			for sent in sents_list:  # Trying to replicate authors score
-				sent_list = []
-				# for word in sent:
-				for word in self.nlp(sent):  # Trying to replicate authors score
-					include = False
-					if self.ignore_stopwords:
-						if word.text.isalpha() and word.text.lower() not in stop_words:
-							include = True
-					else:
-						include = True
+    sents_list = [sent for sent in nltk.sent_tokenize(
+            spacy_doc.text)]
 
-					if include:
-						sent_list.append(next_id)
-						emb[next_id] = self.nlp.vocab.get_vector(word.text)
-						next_id += 1
-						words.append(word.text)
-				if len(sent_list) > 0:
-					doc_list.append(sent_list)
+		if self.model == "roberta-large":
+			for sent in doc:
+				encoded_sent = sent_encode(sent)
+				emb = get_roberta_emb(encoded_sent)
 
-		elif self.model == "elmo":
-			for sent in sents_list:
-				sent_words_list = []
-				sent_ids_list = []
-				mask = []
-				for word in self.nlp(sent):
-					include = False
-					if self.ignore_stopwords:
-						if word.text.isalpha() and word.text.lower() not in stop_words:
-							include = True
-					else:
-						include = True
-					sent_words_list.append(word.text)
-					if include:
-						mask.append(1)  # include the embedding
-					else:
-						mask.append(0)  # exclude the embedding
-
-				if len(sent_words_list) > 0:
-					word_vectors = self.MODEL.embed_sentence(sent_words_list)
-					word_vectors = np.average(word_vectors, axis=0)
-					for word_idx in range(len(word_vectors)):
-						if mask[word_idx]:
-							sent_ids_list.append(next_id)
-							emb[next_id] = word_vectors[word_idx]
-							next_id += 1
-					doc_list.append(sent_ids_list)
-
-		elif self.model == "bert":
-			sents = []
-			for sent in sents_list:
-				sents.append(sent)
-			bert_resp = self.MODEL(sents)
-			for words_list, word_vectors in bert_resp:
+			for words_list, word_vectors in roberta_rep:
 				sent_ids_list = []
 				for word_idx in range(len(words_list)):
 					include = False

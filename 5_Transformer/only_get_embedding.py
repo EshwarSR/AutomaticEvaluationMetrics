@@ -1,4 +1,5 @@
-from transformers import AutoTokenizer, AutoModels
+from transformers import AutoTokenizer, AutoModel
+import torch
 
 model_name = 'roberta-large'
 num_layers = 17
@@ -10,10 +11,10 @@ assert (0 <= num_layers <= len(model.encoder.layer)), f"Invalid num_layers: num_
 model.encoder.layer = torch.nn.ModuleList([layer for layer in model.encoder.layer[:num_layers]])
 
 onesent = 'Some sentence is here.'
-onesent_tokens = tokenizer.encode(torch.tensor([onsent]))
+onesent_tokens = tokenizer.encode(onesent)
 
 model.eval()
 with torch.no_grad():
   out = model(onesent_tokens, attention_mask=attention_mask)
-  emb = out[0]
-return emb
+emb = out[0]
+emb
