@@ -118,10 +118,10 @@ def get_all_ref_emb_weights():
 
 def calculate_multireference_similarity(candidate, processed_refs, next_id, emb):
     s = time.time()
-    can_doc = nlp(candidate[essay_field])
+    cand = candidate[essay_field]
     similarities = []
     next_id, emb, can_id_list, can_weights = get_embeddings_ids_weights(
-        can_doc, next_id, emb)
+        cand, next_id, emb)
     nbow = {
         "hypothesis": ("hypothesis", can_id_list, can_weights)
     }
@@ -163,12 +163,12 @@ def process_multireference_dataset(candidates, processed_reference, results_file
     # for idx, candidate in enumerate(candidates_data):
     while idx < len(candidates):
         candidate = candidates[idx]
-        try:
-            resp = calculate_multireference_similarity(
+        # try:
+        resp = calculate_multireference_similarity(
                 candidate, processed_refs, next_id, emb)
-            final_results.extend(resp)
-        except:
-            print("ERROR WHILE PROCESSING:", candidate[id_field])
+        final_results.extend(resp)
+        # except:
+        #     print("ERROR WHILE PROCESSING MULTI:", candidate[id_field])
 
         if idx % 100 == 0:
             final_results_df = pd.DataFrame(final_results)
@@ -189,15 +189,14 @@ def process_multireference_dataset(candidates, processed_reference, results_file
 #################
 st = time.time()
 
+nlp = spacy.load("en_core_web_md")
+model = SentenceTransformer('bert-large-nli-stsb-mean-tokens')
+print("Loaded model", time.time() - st)
+
 # CNN MailDataset
 # DATASET_FILE = "../data/CNN_DailyMail.tsv"
 # print("Reading dataset from", DATASET_FILE)
 # dataset = pd.read_csv(DATASET_FILE, sep="\t").to_dict("records")
-
-# nlp = spacy.load("en_core_web_md")
-# model = SentenceTransformer('bert-large-nli-stsb-mean-tokens')
-# print("Loaded model", time.time() - st)
-
 # results_file_name = "../results/SentBERT/CNN_DailyMail_SentBERT.tsv"
 # process_dataset(dataset, results_file_name)
 
