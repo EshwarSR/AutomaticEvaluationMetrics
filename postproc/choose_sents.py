@@ -3,7 +3,7 @@ import os
 import nltk
 
 dire = '../data/ASAP_AES/training_set_rel3.tsv'
-res = '../results/asap_aes_final/asap_aes_scores_all_1726_2.tsv'
+res = '../results/asap_aes_results/SentBERT.tsv'
 
 df = pd.read_csv(dire, sep='\t' ,encoding='ISO-8859–1')
 df = df.loc[df['essay_set'] == 3]
@@ -20,10 +20,10 @@ print(len(needed_sents))
 fdf = pd.read_csv(res, sep='\t')
 out = []
 for one in needed_sents:
-	entries = fdf.loc[fdf['cand id'] == one]
+	entries = fdf.loc[fdf['candidate_id'] == one]
 	out.append(entries)
 
 new_df = pd.DataFrame()
 new_df = pd.concat(out)
 print(len(new_df))
-new_df.to_csv("asap_aes_scores_all_1088.tsv",  sep="\t", index=False, header=True, encoding='utf8')
+new_df.to_csv("asap_aes_sentbert.tsv",  sep="\t", index=False, header=True, encoding='utf8')

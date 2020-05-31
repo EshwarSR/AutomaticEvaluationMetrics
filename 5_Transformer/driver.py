@@ -60,7 +60,7 @@ def get_all_ref_emb_weights():
     next_id = 0
     emb = {}
     for item in reference_data:
-        doc = calculator.nlp(item[essay_field])
+        doc = item[essay_field]
         next_id, emb, id_list, weights = calculator.get_embeddings_ids_weights(doc, next_id, emb, method)
         processed_refs[item[id_field]] = {
             "id_list": id_list,
