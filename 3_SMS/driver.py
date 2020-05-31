@@ -7,16 +7,19 @@ from wmd import WMD
 import numpy as np
 import os
 
-# REFERENCE_FILE = "../data/reference_data.tsv"
-REFERENCE_FILE = "../data/ASAP_AES/aes_reference_data.tsv"
-# CANDIDATES_FILE = "../data/candidates_data.tsv"
-CANDIDATES_FILE = "../data/ASAP_AES/aes_candidates_data.tsv"
-# score_field = "Score1"
-score_field = "domain1_score"
-# essay_field = "EssayText"
-essay_field = "essay"
-# id_field = "Id"
-id_field = "essay_id"
+# ASAP SAS
+REFERENCE_FILE = "../data/ASAP_SAS/reference_data.tsv"
+CANDIDATES_FILE = "../data/ASAP_SAS/candidates_data.tsv"
+score_field = "Score1"
+essay_field = "EssayText"
+id_field = "Id"
+
+# ASAP AES
+# REFERENCE_FILE = "../data/ASAP_AES/aes_reference_data.tsv"
+# CANDIDATES_FILE = "../data/ASAP_AES/aes_candidates_data.tsv"
+# score_field = "domain1_score"
+# essay_field = "essay"
+# id_field = "essay_id"
 
 
 def calculate_similarity(candidate, next_id, emb):
