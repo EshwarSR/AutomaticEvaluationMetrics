@@ -3,11 +3,11 @@ import numpy as np
 from pandas import DataFrame
 
 
-from processing import data
+from SAS_processing import data
 from bleu import BLEU
 
 
-df = pd.read_csv('../data/train.tsv', sep='\t')
+df = pd.read_csv('../data/ASAP_SAS/train.tsv', sep='\t')
 n_gram = 4
 
 reference_corpus, candidate_corpus, reference_id, candidate_id, candidate_scores, max_scores = data(df)
