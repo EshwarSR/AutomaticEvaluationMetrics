@@ -66,7 +66,7 @@ def get_similarity_dist(candidate, reference):
     return similarity, dist
 
 
-def process_dataset(dataset, results_file_name):
+def process_dataset(dataset, results_file_name, log=True):
     # Dataset should have candidate,reference and score
     final_results = []
     for idx, sample in enumerate(dataset):
@@ -82,19 +82,24 @@ def process_dataset(dataset, results_file_name):
         final_results.append(sample)
         # except:
         #     print("ERROR WHILE PROCESSING:", sample)
-
-        print("Time taken for candidate", idx, "is", time.time() - s)
+        if log:
+            print("Time taken for candidate", idx, "is", time.time() - s)
 
         if idx % 100 == 99:
-            final_results_df = pd.DataFrame(final_results)
-            final_results_df.to_csv(results_file_name, sep="\t", index=False)
-
-    print("Done with similarity")
+            if results_file_name:
+                final_results_df = pd.DataFrame(final_results)
+                final_results_df.to_csv(results_file_name, sep="\t", index=False)
+    if log:
+        print("Done with similarity")
     final_results_df = pd.DataFrame(final_results)
-    print("Created Dataframe")
-    print(final_results_df)
-    final_results_df.to_csv(results_file_name, sep="\t", index=False)
-    print("Finished writing file")
+    if log:
+        print("Created Dataframe")
+        print(final_results_df)
+    if results_file_name:
+        final_results_df.to_csv(results_file_name, sep="\t", index=False)
+    if log:
+        print("Finished writing file")
+    return final_results_df
 
 
 def get_all_ref_emb_weights():
@@ -165,7 +170,7 @@ def process_multireference_dataset(candidates, processed_reference, results_file
         candidate = candidates[idx]
         # try:
         resp = calculate_multireference_similarity(
-                candidate, processed_refs, next_id, emb)
+            candidate, processed_refs, next_id, emb)
         final_results.extend(resp)
         # except:
         #     print("ERROR WHILE PROCESSING MULTI:", candidate[id_field])
@@ -191,66 +196,66 @@ st = time.time()
 
 nlp = spacy.load("en_core_web_md")
 model = SentenceTransformer('bert-large-nli-stsb-mean-tokens')
-print("Loaded model", time.time() - st)
-
-# CNN MailDataset
-# DATASET_FILE = "../data/CNN_DailyMail.tsv"
-# print("Reading dataset from", DATASET_FILE)
-# dataset = pd.read_csv(DATASET_FILE, sep="\t").to_dict("records")
-# results_file_name = "../results/SentBERT/CNN_DailyMail_SentBERT.tsv"
-# process_dataset(dataset, results_file_name)
 
 
-# ASAP AES Dataset
-# REFERENCE_FILE = "../data/ASAP_AES/aes_reference_data.tsv"
-# CANDIDATES_FILE = "../data/ASAP_AES/aes_candidates_data.tsv"
-# print("Reading dataset from", REFERENCE_FILE, CANDIDATES_FILE)
+if __name__ == "__main__":
+    print("Loaded model", time.time() - st)
+    # CNN MailDataset
+    # DATASET_FILE = "../data/CNN_DailyMail.tsv"
+    # print("Reading dataset from", DATASET_FILE)
+    # dataset = pd.read_csv(DATASET_FILE, sep="\t").to_dict("records")
+    # results_file_name = "../results/SentBERT/CNN_DailyMail_SentBERT.tsv"
+    # process_dataset(dataset, results_file_name)
 
-# candidates_data = pd.read_csv(CANDIDATES_FILE, sep="\t")
-# print("Number of candidates:", len(candidates_data))
-# candidates_data = candidates_data.to_dict("records")
+    # ASAP AES Dataset
+    # REFERENCE_FILE = "../data/ASAP_AES/aes_reference_data.tsv"
+    # CANDIDATES_FILE = "../data/ASAP_AES/aes_candidates_data.tsv"
+    # print("Reading dataset from", REFERENCE_FILE, CANDIDATES_FILE)
 
-# reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
-# print("Number of references:", len(reference_data))
-# reference_data = reference_data.to_dict("records")
+    # candidates_data = pd.read_csv(CANDIDATES_FILE, sep="\t")
+    # print("Number of candidates:", len(candidates_data))
+    # candidates_data = candidates_data.to_dict("records")
 
-# score_field = "domain1_score"
-# essay_field = "essay"
-# id_field = "essay_id"
+    # reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
+    # print("Number of references:", len(reference_data))
+    # reference_data = reference_data.to_dict("records")
 
-# processed_dataset = []
-# for cand in candidates_data:
-#     for ref in reference_data:
-#         sample = {
-#             "candidate": cand[essay_field],
-#             "candidate_id": cand[id_field],
-#             "reference": ref[essay_field],
-#             "reference_id": ref[id_field],
-#             "score": cand[score_field]
-#         }
-#         processed_dataset.append(sample)
+    # score_field = "domain1_score"
+    # essay_field = "essay"
+    # id_field = "essay_id"
 
-# results_file_name = "../results/SentBERT/ASAP_AES_SentBERT.tsv"
-# process_dataset(processed_dataset, results_file_name)
+    # processed_dataset = []
+    # for cand in candidates_data:
+    #     for ref in reference_data:
+    #         sample = {
+    #             "candidate": cand[essay_field],
+    #             "candidate_id": cand[id_field],
+    #             "reference": ref[essay_field],
+    #             "reference_id": ref[id_field],
+    #             "score": cand[score_field]
+    #         }
+    #         processed_dataset.append(sample)
 
+    # results_file_name = "../results/SentBERT/ASAP_AES_SentBERT.tsv"
+    # process_dataset(processed_dataset, results_file_name)
 
-# ASAP SAS Dataset
-REFERENCE_FILE = "../data/ASAP_SAS/reference_data.tsv"
-CANDIDATES_FILE = "../data/ASAP_SAS/candidates_data.tsv"
-print("Reading dataset from", REFERENCE_FILE, CANDIDATES_FILE)
+    # ASAP SAS Dataset
+    REFERENCE_FILE = "../data/ASAP_SAS/reference_data.tsv"
+    CANDIDATES_FILE = "../data/ASAP_SAS/candidates_data.tsv"
+    print("Reading dataset from", REFERENCE_FILE, CANDIDATES_FILE)
 
-candidates_data = pd.read_csv(CANDIDATES_FILE, sep="\t")
-print("Number of candidates:", len(candidates_data))
-candidates_data = candidates_data.to_dict("records")
+    candidates_data = pd.read_csv(CANDIDATES_FILE, sep="\t")
+    print("Number of candidates:", len(candidates_data))
+    candidates_data = candidates_data.to_dict("records")
 
-reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
-print("Number of references:", len(reference_data))
-reference_data = reference_data.to_dict("records")
+    reference_data = pd.read_csv(REFERENCE_FILE, sep="\t")
+    print("Number of references:", len(reference_data))
+    reference_data = reference_data.to_dict("records")
 
-score_field = "Score1"
-essay_field = "EssayText"
-id_field = "Id"
+    score_field = "Score1"
+    essay_field = "EssayText"
+    id_field = "Id"
 
-results_file_name = "../results/SentBERT/ASAP_SAS_SentBERT.tsv"
-process_multireference_dataset(
-    candidates_data, reference_data, results_file_name)
+    results_file_name = "../results/SentBERT/ASAP_SAS_SentBERT.tsv"
+    process_multireference_dataset(
+        candidates_data, reference_data, results_file_name)
