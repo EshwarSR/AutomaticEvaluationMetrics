@@ -27,7 +27,7 @@ odf['R score'] = pd.DataFrame(R)
 odf['P score'] = pd.DataFrame(P)
 odf['score'] = df['score']
 odf.reset_index(drop=True, inplace=True)
-odf.to_csv("outs.tsv", sep="\t", index=False, header=True, encoding='utf8')
+# odf.to_csv("outs.tsv", sep="\t", index=False, header=True, encoding='utf8')
 
 correlations = [["Method", "Correlation", "P value"]]
 
