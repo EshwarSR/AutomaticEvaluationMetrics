@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore")
 import pandas as pd
 import numpy as np
 import os
@@ -14,7 +16,7 @@ cands = df['candidate'].to_list()
 assert len(cands) == len(refs)
 
 from bert_score import score
-P, R, F1 = score(cands, refs, model_type=None, num_layers=None, verbose=True,
+P, R, F1 = score(cands, refs, model_type=None, num_layers=None, verbose=False,
 						idf=False, device='cpu', batch_size=64, nthreads=4, all_layers=False,
 						lang="en", return_hash=False, rescale_with_baseline=False)
 
@@ -25,7 +27,7 @@ odf['R score'] = pd.DataFrame(R)
 odf['P score'] = pd.DataFrame(P)
 odf['score'] = df['score']
 odf.reset_index(drop=True, inplace=True)
-odf.to_csv("outs.tsv", sep="\t", index=False, header=True, encoding='utf8')
+# odf.to_csv("outs.tsv", sep="\t", index=False, header=True, encoding='utf8')
 
 correlations = [["Method", "Correlation", "P value"]]
 
