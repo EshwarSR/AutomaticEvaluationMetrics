@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import os
+from scipy.stats import spearmanr
+from texttable import Texttable
 
 filename = '../data/demo.tsv'
 df = pd.read_csv(filename, delimiter='\t')
