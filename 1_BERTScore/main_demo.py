@@ -43,7 +43,7 @@ for metric in ['R score', 'P score', 'F1 score']:
 		pval = "{0:10.3e}".format(scorr.pvalue)
 	correlations.append(['BERTScore ' + metric, corr, pval])
 
-print("\nCorrelations from BERTScore metric\n")
+#print("\nCorrelations from BERTScore metric\n")
 t = Texttable()
 t.add_rows(correlations)
 print(t.draw())

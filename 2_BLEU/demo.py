@@ -36,7 +36,7 @@ else:
 correlations = [["Method", "Correlation", "P value"]]
 correlations.append(['BLEU', corr, pval])
 
-print("\nCorrelations from BLEU metric\n")
+#print("\nCorrelations from BLEU metric\n")
 t = Texttable()
 t.add_rows(correlations)
 print(t.draw())

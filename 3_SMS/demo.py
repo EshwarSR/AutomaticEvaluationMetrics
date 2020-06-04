@@ -46,9 +46,9 @@ for model in MODELS:
     for method in METHODS:
         corr, pval = process_dataset(dataset, calculator, method)
         correlations.append([model, method, corr, pval])
-    print("Time for Model:", model, time.time()-st)
+#    print("Time for Model:", model, time.time()-st)
     
-print("\nCorrelations from various EMD based metrics\n")
+#print("\nCorrelations from various EMD based metrics\n")
 t = Texttable()
 t.add_rows(correlations)
 print(t.draw())

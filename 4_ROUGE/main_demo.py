@@ -36,14 +36,14 @@ score = odf['score']
 for metric in ['RLf']:
 	similarity = odf[metric]
 	scorr = spearmanr(score, similarity)
-	corr = "{0:6.3f}".format(scorr.correlation)
+	corr = "{0:6.3f}".format(np.abs(scorr.correlation))
 	if (scorr.pvalue >= 0.001):
 		pval = "{0:6.3f}".format(scorr.pvalue)
 	else:
 		pval = "{0:10.3e}".format(scorr.pvalue)
 	correlations.append(['ROUGE-L', corr, pval])
 
-print("\nCorrelations from ROUGE-L metric\n")
+#print("\nCorrelations from ROUGE-L metric\n")
 t = Texttable()
 t.add_rows(correlations)
 print(t.draw())
