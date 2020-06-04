@@ -7,7 +7,6 @@ results = pd.read_csv(results_file, sep="\t")
 similarity = results['R score'].tolist()
 score = results["score"].tolist()
 
-
 scorr = spearmanr(similarity, score)
 # print("File:", results_file)
 print("Spearman Rank Correlation:{0:6.3f}".format(scorr.correlation))
