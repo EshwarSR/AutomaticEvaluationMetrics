@@ -9,7 +9,7 @@ dire = '../results/asap_aes_results/'
 fn = os.listdir(dire)
 for an in fn:
 	print(an[:-4] + ' starting')
-	ou = 'plots_3d/'
+	ou = 'plots_again_3d/'
 	if (os.path.exists(ou) == False):
 		os.mkdir(ou)
 	inpath = dire + an

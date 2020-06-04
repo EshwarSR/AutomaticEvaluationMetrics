@@ -3,7 +3,7 @@ import os
 import nltk
 
 dire = '../data/ASAP_AES/training_set_rel3.tsv'
-res = '../results/asap_aes_results/SentBERT.tsv'
+res = '../results/asap_aes_results/roberta-large_sms.tsv'
 
 df = pd.read_csv(dire, sep='\t' ,encoding='ISO-8859–1')
 df = df.loc[df['essay_set'] == 3]
@@ -26,4 +26,4 @@ for one in needed_sents:
 new_df = pd.DataFrame()
 new_df = pd.concat(out)
 print(len(new_df))
-new_df.to_csv("asap_aes_sentbert.tsv",  sep="\t", index=False, header=True, encoding='utf8')
+new_df.to_csv("roberta_large_sms.tsv",  sep="\t", index=False, header=True, encoding='utf8')
